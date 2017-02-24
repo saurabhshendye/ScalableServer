@@ -4,5 +4,10 @@
 package cs455.scaling.Threads;
 
 
-public class Worker_Thread extends Thread {
+public class Worker_Thread implements Runnable {
+
+    public void run()
+    {
+
+    }
 }
