@@ -17,5 +17,6 @@ public class client {
         server_port = Integer.parseInt(args[1]);
         message_rate = Integer.parseInt(args[2]);
 
+
     }
 }
