@@ -5,8 +5,11 @@
 package cs455.scaling.Client;
 
 
+import cs455.scaling.WireFormats.payload;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 public class client {
@@ -27,6 +30,18 @@ public class client {
         if(socketChannel.isConnected())
         {
             System.out.println("Socket is connected");
+        }
+
+        String newData = "New String to write to file..." + System.currentTimeMillis();
+
+        ByteBuffer buf = ByteBuffer.allocate(48);
+        buf.clear();
+        buf.put(newData.getBytes());
+
+        buf.flip();
+
+        while(buf.hasRemaining()) {
+            socketChannel.write(buf);
         }
 
     }

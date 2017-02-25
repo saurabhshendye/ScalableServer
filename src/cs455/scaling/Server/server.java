@@ -6,6 +6,7 @@ package cs455.scaling.Server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
@@ -27,11 +28,15 @@ public class server {
         while (true)
         {
             SocketChannel socketChannel = serverSocketChannel.accept();
-            while (socketChannel.isConnected())
-            {
-               System.out.println("Connected");
+
+            ByteBuffer buf = ByteBuffer.allocate(48);
+
+            int bytesRead = socketChannel.read(buf);
+
+            while(buf.hasRemaining()){
+                System.out.print((char) buf.get());
             }
-            System.out.println("Now Disconnected");
+
         }
 //        if (serverSocketChannel.is)
     }
