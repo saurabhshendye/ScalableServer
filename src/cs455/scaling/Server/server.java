@@ -27,6 +27,11 @@ public class server {
         while (true)
         {
             SocketChannel socketChannel = serverSocketChannel.accept();
+            while (socketChannel.isConnected())
+            {
+               System.out.println("Connected");
+            }
+            System.out.println("Now Disconnected");
         }
 //        if (serverSocketChannel.is)
     }
