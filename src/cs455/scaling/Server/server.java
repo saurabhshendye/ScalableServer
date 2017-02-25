@@ -37,6 +37,8 @@ public class server {
                 System.out.print((char) buf.get());
             }
 
+            System.out.println("Done Reading");
+
         }
 //        if (serverSocketChannel.is)
     }

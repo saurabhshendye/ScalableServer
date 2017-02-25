@@ -43,6 +43,7 @@ public class client {
         while(buf.hasRemaining()) {
             socketChannel.write(buf);
         }
+        System.out.println("Done Writing");
 
     }
 }
