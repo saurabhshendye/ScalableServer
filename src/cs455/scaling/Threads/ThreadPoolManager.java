@@ -9,6 +9,9 @@ public class ThreadPoolManager extends Thread
 {
     public ThreadPoolManager(int thread_count)
     {
+        for (int i = 0; i < thread_count; i++ )
+        {
 
+        }
     }
 }
