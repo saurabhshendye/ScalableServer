@@ -29,12 +29,14 @@ public class server {
         {
             SocketChannel socketChannel = serverSocketChannel.accept();
 
-            ByteBuffer buf = ByteBuffer.allocate(48);
+            ByteBuffer buf = ByteBuffer.allocate(8196);
 
             int bytesRead = socketChannel.read(buf);
 
-            while(buf.hasRemaining()){
-                System.out.print((char) buf.get());
+            System.out.println("Byte count in byte data: " +bytesRead);
+            while(buf.hasRemaining())
+            {
+                System.out.print((buf.get()));
             }
 
             System.out.println("Done Reading");
