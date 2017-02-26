@@ -4,6 +4,8 @@
 
 package cs455.scaling.Server;
 
+import cs455.scaling.Threads.ThreadPoolManager;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -17,31 +19,31 @@ public class server {
 
     public static void main(String [] args) throws IOException
     {
+        // Accepting the inputs from command line
         port = Integer.parseInt(args[0]);
         Thread_count = Integer.parseInt(args[1]);
 
+        // Creating a server Socket channel using java nio package
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.socket().bind(new InetSocketAddress(port));
-
         System.out.println("Server socket created");
 
+        // Creating a ThreadPoolManager object
+        ThreadPoolManager manager = new ThreadPoolManager(Thread_count);
+
+        // Listening for the connections
         while (true)
         {
             SocketChannel socketChannel = serverSocketChannel.accept();
-
-            ByteBuffer buf = ByteBuffer.allocate(8196);
-
+            ByteBuffer buf = ByteBuffer.allocate(48);
             int bytesRead = socketChannel.read(buf);
-
             System.out.println("Byte count in byte data: " +bytesRead);
             while(buf.hasRemaining())
             {
                 System.out.print((buf.get()));
             }
-
             System.out.println("Done Reading");
 
         }
-//        if (serverSocketChannel.is)
     }
 }

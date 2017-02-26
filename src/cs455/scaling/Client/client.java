@@ -11,12 +11,14 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.LinkedList;
 
 public class client {
 
     private static String server_IP;
     private static int server_port;
     private static int message_rate;
+    private static LinkedList<String> HashCodeList = new LinkedList<>();
 
     public static void main(String [] args) throws IOException
     {
@@ -40,7 +42,8 @@ public class client {
 
         buf.flip();
 
-        while(buf.hasRemaining()) {
+        while(buf.hasRemaining())
+        {
             socketChannel.write(buf);
         }
         System.out.println("Done Writing");
