@@ -38,14 +38,19 @@ public class client {
 
         ByteBuffer buf = ByteBuffer.allocate(48);
         buf.clear();
-        buf.put(newData.getBytes());
 
-        buf.flip();
-
-        while(buf.hasRemaining())
+        for (int i = 0; i < 5; i++)
         {
-            socketChannel.write(buf);
+            buf.put(newData.getBytes());
+
+            buf.flip();
+
+            while(buf.hasRemaining())
+            {
+                socketChannel.write(buf);
+            }
         }
+
         System.out.println("Done Writing");
 
     }
