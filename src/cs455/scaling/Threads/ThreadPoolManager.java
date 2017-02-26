@@ -5,11 +5,14 @@
 package cs455.scaling.Threads;
 
 
+import cs455.scaling.util.Tasks;
+
 import java.util.LinkedList;
 
 public class ThreadPoolManager extends Thread
 {
     private LinkedList<Thread> Thread_list = new LinkedList<>();
+    private static LinkedList<Tasks> tasks =new LinkedList<>();
 
     public ThreadPoolManager(int thread_count)
     {
@@ -23,5 +26,20 @@ public class ThreadPoolManager extends Thread
             thread.start();
         }
         System.out.println("Created the requested number of threads");
+    }
+
+    public static void Add_task(Tasks task)
+    {
+        tasks.addLast(task);
+    }
+
+    public static Tasks get_task()
+    {
+        return tasks.getFirst();
+    }
+
+    public static void remove_task(Tasks task)
+    {
+        tasks.remove(task);
     }
 }
