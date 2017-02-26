@@ -10,4 +10,16 @@ public class Worker_Thread implements Runnable {
     {
 
     }
+
+    private String read_and_hash()
+    {
+        String hash = "";
+
+        return hash;
+    }
+
+    private void write(String hash_code)
+    {
+
+    }
 }
