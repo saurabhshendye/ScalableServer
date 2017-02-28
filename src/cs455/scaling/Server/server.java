@@ -42,8 +42,9 @@ public class server {
             System.out.println("Byte count in byte data: " +bytesRead);
             byte [] dst = buf.array();
             String msg = new String(dst);
+            byte [] test = msg.getBytes();
             System.out.println(msg);
-            String hash = SHA1FromBytes(dst);
+            String hash = SHA1FromBytes(test);
             System.out.println("Hash for received String is: " +hash);
 
             //            while(buf.hasRemaining())
