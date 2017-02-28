@@ -19,4 +19,5 @@ public class sha1 {
 
         return hashInt.toString(16);
     }
+
 }

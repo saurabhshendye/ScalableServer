@@ -5,16 +5,16 @@
 package cs455.scaling.Client;
 
 
+import cs455.scaling.Threads.Client_send_thread;
 import cs455.scaling.WireFormats.payload;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 
-import static cs455.scaling.util.sha1.SHA1FromBytes;
+
 
 public class client {
 
@@ -36,30 +36,35 @@ public class client {
             System.out.println("Socket is connected");
         }
 
+        Client_send_thread send_T = new Client_send_thread();
+        send_T.start();
 
-        String newData = "New String to write to file..." + System.currentTimeMillis();
-        System.out.println("Sending String: " +newData);
-        byte[] b = newData.getBytes();
-        String hash = SHA1FromBytes(b);
-        System.out.println("Hash code for sent message: " +hash);
-        ByteBuffer buf = ByteBuffer.allocate(48);
-        buf.clear();
 
-//        for (int i = 0; i < 5; i++)
-        {
-            buf.put(newData.getBytes());
+//        String newData = "New String to write to file..." + System.currentTimeMillis();
+//        System.out.println("Sending String: " +newData);
+//        byte[] b = newData.getBytes();
+//        String hash = SHA1FromBytes(b);
+//
+//        System.out.println("Hash code for sent message: " +hash);
+//
+//        ByteBuffer buf = ByteBuffer.allocate(48);
+//        buf.clear();
+//
+////        for (int i = 0; i < 5; i++)
+//        {
+//            buf.put(newData.getBytes());
+//
+//            buf.flip();
+//
+//            while(buf.hasRemaining())
+//            {
+//                socketChannel.write(buf);
+//            }
+//
+//            buf.clear();
+//        }
 
-            buf.flip();
-
-            while(buf.hasRemaining())
-            {
-                socketChannel.write(buf);
-            }
-
-            buf.clear();
-        }
-
-        System.out.println("Done Writing");
+//        System.out.println("Done Writing");
 
     }
 }

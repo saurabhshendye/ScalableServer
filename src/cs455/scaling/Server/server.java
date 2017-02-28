@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 
 import static cs455.scaling.util.sha1.SHA1FromBytes;
 
+
 public class server {
 
     private static int Thread_count;
@@ -37,15 +38,15 @@ public class server {
         while (true)
         {
             SocketChannel socketChannel = serverSocketChannel.accept();
-            ByteBuffer buf = ByteBuffer.allocate(48);
+            ByteBuffer buf = ByteBuffer.allocate(43);
             int bytesRead = socketChannel.read(buf);
             System.out.println("Byte count in byte data: " +bytesRead);
             byte [] dst = buf.array();
-            String msg = new String(dst);
-            byte [] test = msg.getBytes();
-            System.out.println(msg);
-            String hash = SHA1FromBytes(test);
+//            String msg = new String(dst);
+//            System.out.println(msg);
+            String hash = SHA1FromBytes(dst);
             System.out.println("Hash for received String is: " +hash);
+
 
             //            while(buf.hasRemaining())
 //            {
