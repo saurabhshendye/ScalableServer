@@ -40,8 +40,9 @@ public class server {
             ByteBuffer buf = ByteBuffer.allocate(48);
             int bytesRead = socketChannel.read(buf);
             System.out.println("Byte count in byte data: " +bytesRead);
-            byte [] dst = new byte[bytesRead];
-            buf.get(dst);
+            byte [] dst = buf.array();
+            String msg = new String(dst);
+            System.out.println(msg);
             String hash = SHA1FromBytes(dst);
             System.out.println("Hash for received String is: " +hash);
 

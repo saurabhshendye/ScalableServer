@@ -38,7 +38,7 @@ public class client {
 
 
         String newData = "New String to write to file..." + System.currentTimeMillis();
-
+        System.out.println("Sending String: " +newData);
         byte[] b = newData.getBytes();
         String hash = SHA1FromBytes(b);
         System.out.println("Hash code for sent message: " +hash);
