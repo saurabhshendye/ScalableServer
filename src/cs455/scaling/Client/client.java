@@ -36,7 +36,7 @@ public class client {
             System.out.println("Socket is connected");
         }
 
-        Client_send_thread send_T = new Client_send_thread();
+        Client_send_thread send_T = new Client_send_thread(socketChannel, message_rate);
         send_T.start();
 
 

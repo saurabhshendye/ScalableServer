@@ -28,6 +28,11 @@ public class ThreadPoolManager extends Thread
         System.out.println("Created the requested number of threads");
     }
 
+    public void run()
+    {
+
+    }
+
     public static void Add_task(Tasks task)
     {
         tasks.addLast(task);

@@ -28,12 +28,13 @@ public class payload
         ByteArrayOutputStream baopstream = new ByteArrayOutputStream();
         DataOutputStream dout = new DataOutputStream(new BufferedOutputStream(baopstream));
 
-        int Len = 8192;
-        dout.writeInt(Len);
+//        int Len = 8192;
+//        dout.writeInt(Len);
 
-        for (int i = 0; i < long_array.length; i++)
+//        for (int i = 0; i < long_array.length; i++)
+        for (long num : long_array)
         {
-            dout.writeLong(long_array[i]);
+            dout.writeLong(num);
         }
 
         byte[] marshaled = baopstream.toByteArray();

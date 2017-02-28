@@ -38,7 +38,7 @@ public class server {
         while (true)
         {
             SocketChannel socketChannel = serverSocketChannel.accept();
-            ByteBuffer buf = ByteBuffer.allocate(43);
+            ByteBuffer buf = ByteBuffer.allocate(8192);
             int bytesRead = socketChannel.read(buf);
             System.out.println("Byte count in byte data: " +bytesRead);
             byte [] dst = buf.array();
@@ -47,11 +47,6 @@ public class server {
             String hash = SHA1FromBytes(dst);
             System.out.println("Hash for received String is: " +hash);
 
-
-            //            while(buf.hasRemaining())
-//            {
-//                System.out.print((buf.get()));
-//            }
             System.out.println("Done Reading");
 
         }
