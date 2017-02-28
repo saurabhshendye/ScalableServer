@@ -16,6 +16,7 @@ public class sha1 {
         byte [] hash = digest.digest(data);
         BigInteger hashInt = new BigInteger(1, hash);
 
+
         return hashInt.toString(16);
     }
 }

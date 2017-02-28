@@ -11,7 +11,10 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
+
+import static cs455.scaling.util.sha1.SHA1FromBytes;
 
 public class client {
 
@@ -20,8 +23,7 @@ public class client {
     private static int message_rate;
     private static LinkedList<String> HashCodeList = new LinkedList<>();
 
-    public static void main(String [] args) throws IOException
-    {
+    public static void main(String [] args) throws IOException, NoSuchAlgorithmException {
         server_IP = args[0];
         server_port = Integer.parseInt(args[1]);
         message_rate = Integer.parseInt(args[2]);
@@ -37,6 +39,9 @@ public class client {
 
         String newData = "New String to write to file..." + System.currentTimeMillis();
 
+        byte[] b = newData.getBytes();
+        String hash = SHA1FromBytes(b);
+        System.out.println("Hash code for sent message: " +hash);
         ByteBuffer buf = ByteBuffer.allocate(48);
         buf.clear();
 
