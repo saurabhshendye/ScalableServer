@@ -37,13 +37,27 @@ public class server {
         // Listening for the connections
         while (true)
         {
+            // Creating a socketchannnel for incoming connections
+            // and allocating a buffer of size 8KB
             SocketChannel socketChannel = serverSocketChannel.accept();
             ByteBuffer buf = ByteBuffer.allocate(8192);
+
+            // The code henceforth will be a part of worker threads read function
             int bytesRead = socketChannel.read(buf);
             System.out.println("Byte count in byte data: " +bytesRead);
             byte [] dst = buf.array();
-//            String msg = new String(dst);
-//            System.out.println(msg);
+            while (buf.hasRemaining())
+            {
+
+                System.out.println("Remaining");
+                bytesRead = socketChannel.read(buf);
+                System.out.println("Byte count in byte data: " +bytesRead);
+                dst = buf.array();
+                System.out.println("Temp length: " +dst.length);
+                System.out.println(buf.remaining());
+
+            }
+
             String hash = SHA1FromBytes(dst);
             System.out.println("Hash for received String is: " +hash);
 
