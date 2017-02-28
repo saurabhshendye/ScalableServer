@@ -6,7 +6,12 @@ package cs455.scaling.Threads;
 
 public class Worker_Thread implements Runnable {
 
-    public void run()
+    public synchronized void run()
+    {
+
+    }
+
+    public synchronized void setDone()
     {
 
     }

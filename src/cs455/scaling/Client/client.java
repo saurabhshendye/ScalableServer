@@ -34,12 +34,13 @@ public class client {
             System.out.println("Socket is connected");
         }
 
+
         String newData = "New String to write to file..." + System.currentTimeMillis();
 
         ByteBuffer buf = ByteBuffer.allocate(48);
         buf.clear();
 
-        for (int i = 0; i < 5; i++)
+//        for (int i = 0; i < 5; i++)
         {
             buf.put(newData.getBytes());
 
@@ -49,6 +50,8 @@ public class client {
             {
                 socketChannel.write(buf);
             }
+
+            buf.clear();
         }
 
         System.out.println("Done Writing");
