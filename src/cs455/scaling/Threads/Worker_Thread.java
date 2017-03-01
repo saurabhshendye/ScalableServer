@@ -6,6 +6,13 @@ package cs455.scaling.Threads;
 
 public class Worker_Thread implements Runnable {
 
+    private Task_Manager T_manager;
+
+    public Worker_Thread(Task_Manager t)
+    {
+        this.T_manager = t;
+    }
+
     public synchronized void run()
     {
 

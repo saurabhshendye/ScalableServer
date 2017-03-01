@@ -10,6 +10,7 @@ import cs455.scaling.WireFormats.payload;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
@@ -30,7 +31,7 @@ public class client {
 
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.connect(new InetSocketAddress(server_IP, server_port));
-
+        socketChannel.configureBlocking(false);
         if(socketChannel.isConnected())
         {
             System.out.println("Socket is connected");
@@ -38,6 +39,14 @@ public class client {
 
         Client_send_thread send_T = new Client_send_thread(socketChannel, message_rate);
         send_T.start();
+
+
+        ByteBuffer buf = ByteBuffer.allocate(40);
+        int bytesRead = socketChannel.read(buf);
+        System.out.println("Byte count in byte data: " +bytesRead);
+        byte [] dst = buf.array();
+        String hash = new String(dst);
+        System.out.println("Received Hash: " +hash);
 
 
 //        String newData = "New String to write to file..." + System.currentTimeMillis();
