@@ -10,7 +10,9 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 public class Task_Manager extends Thread
 {
@@ -21,6 +23,36 @@ public class Task_Manager extends Thread
     public Task_Manager() throws IOException
     {
 
+    }
+
+    public void run()
+    {
+
+        while (true)
+        {
+            try
+            {
+                selector.select();
+                Set<SelectionKey> selectedKeys = selector.selectedKeys();
+                Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
+
+                while (keyIterator.hasNext()) {
+                    SelectionKey key = keyIterator.next();
+
+                    if (key.isReadable())
+                    {
+                        System.out.println("Creating a read task");
+
+                    }
+                    keyIterator.remove();
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     public void getRegistered(SocketChannel channel) throws ClosedChannelException
