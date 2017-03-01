@@ -33,6 +33,14 @@ public class ThreadPoolManager extends Thread
 
     public void run()
     {
+        while (true)
+        {
+            if (manager.get_task() != null)
+            {
+
+            }
+
+        }
 
     }
 

@@ -22,12 +22,12 @@ public class server {
 
 //    private static int Thread_count;
 //    private static int port;
-    private static Selector selector;
+//    private static Selector selector;
     private static int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 
     public static void main(String [] args) throws IOException, NoSuchAlgorithmException {
         // Opening a selector
-        selector = Selector.open();
+//        selector = Selector.open();
 
         // Accepting the inputs from command line
         int port = Integer.parseInt(args[0]);
@@ -39,7 +39,7 @@ public class server {
         System.out.println("Server socket created");
 
         // Creating a task allocator object
-        Task_Manager taskManager = new Task_Manager(selector);
+        Task_Manager taskManager = new Task_Manager();
         taskManager.start();
 
         // Creating a ThreadPoolManager object
@@ -56,7 +56,7 @@ public class server {
             socketChannel.configureBlocking(false);
 
             // Register with the selector
-            getRegistered(socketChannel);
+            taskManager.getRegistered(socketChannel);
             System.out.println("We haven't reached here");
 
 
@@ -97,10 +97,10 @@ public class server {
         }
     }
 
-    private static void getRegistered(SocketChannel channel) throws ClosedChannelException
-    {
-        selector.wakeup();
-        SelectionKey key = channel.register(selector, interestSet);
-        System.out.println("Registered the channel to a selector");
-    }
+//    private static void getRegistered(SocketChannel channel) throws ClosedChannelException
+//    {
+//        selector.wakeup();
+//        SelectionKey key = channel.register(selector, interestSet);
+//        System.out.println("Registered the channel to a selector");
+//    }
 }

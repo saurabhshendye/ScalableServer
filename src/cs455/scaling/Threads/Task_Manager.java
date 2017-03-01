@@ -16,13 +16,13 @@ import java.util.Set;
 
 public class Task_Manager extends Thread
 {
-    private static LinkedList<Tasks> tasks =new LinkedList<>();
-    private Selector selector;
-//    private int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
+    private LinkedList<Tasks> tasks = new LinkedList<>();
+    private Selector selector = Selector.open();
+    private int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 
-    public Task_Manager(Selector S) throws IOException
+    public Task_Manager() throws IOException
     {
-        this.selector = S;
+//        this.selector = S;
     }
 
     public void run()
@@ -35,17 +35,25 @@ public class Task_Manager extends Thread
                 System.out.println("In the task_managers run method");
                 int i = selector.select();
                 System.out.println("Ready threads: " +i);
+
+                if(i == 0)
+                {
+                    continue;
+                }
+
                 Set<SelectionKey> selectedKeys = selector.selectedKeys();
                 Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
 
-                while (keyIterator.hasNext()) {
+                while (keyIterator.hasNext())
+                {
                     SelectionKey key = keyIterator.next();
 
                     if (key.isReadable())
                     {
                         System.out.println("Channel is read ready..");
                         System.out.println("Creating a read task");
-
+                        Tasks read = new Tasks(0,(SocketChannel)key.channel());
+                        Add_task(read);
                     }
                     keyIterator.remove();
                 }
@@ -58,19 +66,25 @@ public class Task_Manager extends Thread
         }
     }
 
+    public void getRegistered(SocketChannel channel) throws ClosedChannelException
+    {
+        selector.wakeup();
+        SelectionKey key = channel.register(selector, interestSet);
+        System.out.println("Registered the channel to a selector");
+    }
 
 
-    public static void Add_task(Tasks task)
+    public synchronized void Add_task(Tasks task)
     {
         tasks.addLast(task);
     }
 
-    public static Tasks get_task()
+    public synchronized Tasks get_task()
     {
         return tasks.getFirst();
     }
 
-    public static void remove_task(Tasks task)
+    public synchronized void remove_task(Tasks task)
     {
         tasks.remove(task);
     }
