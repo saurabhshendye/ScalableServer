@@ -74,17 +74,17 @@ public class Task_Manager extends Thread
     }
 
 
-    public synchronized void Add_task(Tasks task)
+    synchronized void Add_task(Tasks task)
     {
         tasks.addLast(task);
     }
 
-    public synchronized Tasks get_task()
+    synchronized Tasks get_task()
     {
-        return tasks.getFirst();
+        return tasks.peekFirst();
     }
 
-    public synchronized void remove_task(Tasks task)
+    synchronized void remove_task(Tasks task)
     {
         tasks.remove(task);
     }

@@ -12,7 +12,7 @@ import java.util.LinkedList;
 public class ThreadPoolManager extends Thread
 {
     private Task_Manager manager;
-    private LinkedList<Thread> Thread_list = new LinkedList<>();
+    private LinkedList<Worker_Thread> Thread_list = new LinkedList<>();
 
 
     public ThreadPoolManager(int thread_count, Task_Manager M)
@@ -22,9 +22,9 @@ public class ThreadPoolManager extends Thread
         for (int i = 0; i < thread_count; i++ )
         {
             Worker_Thread W = new Worker_Thread(M);
-            Thread thread = new Thread(W);
-            Thread_list.add(thread);
-            thread.start();
+//            Thread thread = new Thread(W);
+            Thread_list.add(W);
+            W.start();
         }
         System.out.println("Created the requested number of threads");
 
@@ -37,14 +37,21 @@ public class ThreadPoolManager extends Thread
         {
             if (manager.get_task() != null)
             {
+                if (Thread_list.peekFirst() == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    Worker_Thread worker = Thread_list.peekFirst();
+                    Thread_list.remove(worker);
 
+                    Tasks task = manager.get_task();
+                    manager.remove_task(task);
+
+                    worker.setDone(task);
+                }
             }
-
         }
-
     }
-
-
-
-
 }
