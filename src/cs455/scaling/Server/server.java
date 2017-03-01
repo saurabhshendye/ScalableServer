@@ -5,14 +5,14 @@
 package cs455.scaling.Server;
 
 
+import cs455.scaling.Threads.Stats_Printer;
 import cs455.scaling.Threads.Task_Manager;
 import cs455.scaling.Threads.ThreadPoolManager;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.*;
 import java.security.NoSuchAlgorithmException;
 
 import static cs455.scaling.util.sha1.SHA1FromBytes;
@@ -22,8 +22,13 @@ public class server {
 
 //    private static int Thread_count;
 //    private static int port;
+    private static Selector selector;
+    private static int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 
     public static void main(String [] args) throws IOException, NoSuchAlgorithmException {
+        // Opening a selector
+        selector = Selector.open();
+
         // Accepting the inputs from command line
         int port = Integer.parseInt(args[0]);
         int Thread_count = Integer.parseInt(args[1]);
@@ -34,7 +39,7 @@ public class server {
         System.out.println("Server socket created");
 
         // Creating a task allocator object
-        Task_Manager taskManager = new Task_Manager();
+        Task_Manager taskManager = new Task_Manager(selector);
         taskManager.start();
 
         // Creating a ThreadPoolManager object
@@ -51,7 +56,8 @@ public class server {
             socketChannel.configureBlocking(false);
 
             // Register with the selector
-            taskManager.getRegistered(socketChannel);
+            getRegistered(socketChannel);
+            System.out.println("We haven't reached here");
 
 
             // The code henceforth will be a part of worker threads read function
@@ -89,5 +95,12 @@ public class server {
 //                socketChannel.write(buf_w);
 //            }
         }
+    }
+
+    private static void getRegistered(SocketChannel channel) throws ClosedChannelException
+    {
+        selector.wakeup();
+        SelectionKey key = channel.register(selector, interestSet);
+        System.out.println("Registered the channel to a selector");
     }
 }

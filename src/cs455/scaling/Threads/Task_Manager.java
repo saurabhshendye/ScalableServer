@@ -17,12 +17,12 @@ import java.util.Set;
 public class Task_Manager extends Thread
 {
     private static LinkedList<Tasks> tasks =new LinkedList<>();
-    private Selector selector = Selector.open();
-    private int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
+    private Selector selector;
+//    private int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 
-    public Task_Manager() throws IOException
+    public Task_Manager(Selector S) throws IOException
     {
-
+        this.selector = S;
     }
 
     public void run()
@@ -32,7 +32,9 @@ public class Task_Manager extends Thread
         {
             try
             {
-                selector.select();
+                System.out.println("In the task_managers run method");
+                int i = selector.select();
+                System.out.println("Ready threads: " +i);
                 Set<SelectionKey> selectedKeys = selector.selectedKeys();
                 Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
 
@@ -56,11 +58,7 @@ public class Task_Manager extends Thread
         }
     }
 
-    public synchronized void getRegistered(SocketChannel channel) throws ClosedChannelException
-    {
-        SelectionKey key = channel.register(selector, interestSet);
-        System.out.println("Registered the channel to a selector");
-    }
+
 
     public static void Add_task(Tasks task)
     {
