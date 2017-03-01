@@ -41,6 +41,7 @@ public class Task_Manager extends Thread
 
                     if (key.isReadable())
                     {
+                        System.out.println("Channel is read ready..");
                         System.out.println("Creating a read task");
 
                     }

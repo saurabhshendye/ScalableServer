@@ -52,39 +52,39 @@ public class server {
             taskManager.getRegistered(socketChannel);
 
             // The code henceforth will be a part of worker threads read function
-            ByteBuffer buf = ByteBuffer.allocate(8192);
-            int bytesRead = socketChannel.read(buf);
-            System.out.println("Byte count in byte data: " +bytesRead);
-            byte [] dst = buf.array();
-            while (buf.hasRemaining())
-            {
-                System.out.println("Remaining");
-                bytesRead = socketChannel.read(buf);
-                System.out.println("Byte count in byte data: " +bytesRead);
-                dst = buf.array();
-                System.out.println("Temp length: " +dst.length);
-                System.out.println(buf.remaining());
-            }
-
-            String hash = SHA1FromBytes(dst);
-            System.out.println("Hash for received String is: " +hash);
-
-            System.out.println("Done Reading");
-
-            System.out.println("Now Writing");
-
-            byte [] b = hash.getBytes();
-
-            ByteBuffer buf_w = ByteBuffer.allocate(b.length);
-            System.out.println("Hash length in bytes: " +b.length);
-            buf.clear();
-            buf_w.put(b);
-            buf_w.flip();
-
-            while(buf.hasRemaining())
-            {
-                socketChannel.write(buf_w);
-            }
+//            ByteBuffer buf = ByteBuffer.allocate(8192);
+//            int bytesRead = socketChannel.read(buf);
+//            System.out.println("Byte count in byte data: " +bytesRead);
+//            byte [] dst = buf.array();
+//            while (buf.hasRemaining())
+//            {
+//                System.out.println("Remaining");
+//                bytesRead = socketChannel.read(buf);
+//                System.out.println("Byte count in byte data: " +bytesRead);
+//                dst = buf.array();
+//                System.out.println("Temp length: " +dst.length);
+//                System.out.println(buf.remaining());
+//            }
+//
+//            String hash = SHA1FromBytes(dst);
+//            System.out.println("Hash for received String is: " +hash);
+//
+//            System.out.println("Done Reading");
+//
+//            System.out.println("Now Writing");
+//
+//            byte [] b = hash.getBytes();
+//
+//            ByteBuffer buf_w = ByteBuffer.allocate(b.length);
+//            System.out.println("Hash length in bytes: " +b.length);
+//            buf.clear();
+//            buf_w.put(b);
+//            buf_w.flip();
+//
+//            while(buf.hasRemaining())
+//            {
+//                socketChannel.write(buf_w);
+//            }
         }
     }
 }
