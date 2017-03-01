@@ -20,13 +20,13 @@ import static cs455.scaling.util.sha1.SHA1FromBytes;
 
 public class server {
 
-    private static int Thread_count;
-    private static int port;
+//    private static int Thread_count;
+//    private static int port;
 
     public static void main(String [] args) throws IOException, NoSuchAlgorithmException {
         // Accepting the inputs from command line
-        port = Integer.parseInt(args[0]);
-        Thread_count = Integer.parseInt(args[1]);
+        int port = Integer.parseInt(args[0]);
+        int Thread_count = Integer.parseInt(args[1]);
 
         // Creating a server Socket channel using java nio package
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
@@ -35,10 +35,11 @@ public class server {
 
         // Creating a task allocator object
         Task_Manager taskManager = new Task_Manager();
+        taskManager.start();
 
         // Creating a ThreadPoolManager object
         ThreadPoolManager poolManager = new ThreadPoolManager(Thread_count, taskManager);
-
+        poolManager.start();
 
         // Listening for the connections
         while (true)
@@ -46,10 +47,12 @@ public class server {
             // Creating a socketchannnel for incoming connections
             // and allocating a buffer of size 8KB
             SocketChannel socketChannel = serverSocketChannel.accept();
+            System.out.println("Accepted a new connection");
             socketChannel.configureBlocking(false);
 
             // Register with the selector
             taskManager.getRegistered(socketChannel);
+
 
             // The code henceforth will be a part of worker threads read function
 //            ByteBuffer buf = ByteBuffer.allocate(8192);
