@@ -36,10 +36,7 @@ public class ThreadPoolManager extends Thread
 
     }
 
-    public void getRegistered()
-    {
 
-    }
 
 
 }

@@ -48,6 +48,8 @@ public class server {
             SocketChannel socketChannel = serverSocketChannel.accept();
             socketChannel.configureBlocking(false);
 
+            // Register with the selector
+            taskManager.getRegistered(socketChannel);
 
             // The code henceforth will be a part of worker threads read function
             ByteBuffer buf = ByteBuffer.allocate(8192);
