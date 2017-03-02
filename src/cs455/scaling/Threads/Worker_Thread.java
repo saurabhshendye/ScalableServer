@@ -32,9 +32,12 @@ public class Worker_Thread extends Thread {
                 wait();
                 if (current_task.getType() == 0)
                 {
+                    SocketChannel channel = current_task.getChannel();
                     String hash = read_and_hash();
-                    Tasks new_task = new Tasks(1,hash,current_task.getChannel());
+                    Tasks new_task = new Tasks(1,hash,channel);
                     T_manager.Add_task(new_task);
+                    T_manager.getRegistered(channel);
+
                 }
                 else if (current_task.getType() == 1)
                 {
