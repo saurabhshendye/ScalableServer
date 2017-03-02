@@ -90,6 +90,6 @@ public class Worker_Thread extends Thread {
 
     private void write(String hash_code)
     {
-
+        System.out.println("Written");
     }
 }
