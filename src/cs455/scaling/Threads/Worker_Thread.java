@@ -50,6 +50,7 @@ public class Worker_Thread extends Thread {
 
     synchronized void setDone(Tasks task)
     {
+        System.out.println("Set Done");
         current_task = task;
         notify();
     }

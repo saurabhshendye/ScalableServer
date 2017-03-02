@@ -20,6 +20,7 @@ public class Task_Manager extends Thread
     private Selector selector = Selector.open();
     private int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 
+
     public Task_Manager() throws IOException
     {
 //        this.selector = S;
@@ -47,6 +48,7 @@ public class Task_Manager extends Thread
                 while (keyIterator.hasNext())
                 {
                     SelectionKey key = keyIterator.next();
+                    keyIterator.remove();
 
                     if (key.isReadable())
                     {
@@ -54,8 +56,9 @@ public class Task_Manager extends Thread
 //                        System.out.println("Creating a read task");
                         Tasks read = new Tasks(0,(SocketChannel)key.channel());
                         Add_task(read);
+                        key.cancel();
                     }
-                    keyIterator.remove();
+
                 }
             }
             catch (IOException e)
@@ -71,6 +74,7 @@ public class Task_Manager extends Thread
         selector.wakeup();
         SelectionKey key = channel.register(selector, interestSet);
         System.out.println("Registered the channel to a selector");
+
     }
 
 
