@@ -11,6 +11,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.security.NoSuchAlgorithmException;
 
+import static cs455.scaling.Threads.ThreadPoolManager.getBackInList;
 import static cs455.scaling.util.sha1.SHA1FromBytes;
 
 public class Worker_Thread extends Thread {
@@ -18,7 +19,7 @@ public class Worker_Thread extends Thread {
     private Task_Manager T_manager;
     private static Tasks current_task;
 
-    public Worker_Thread(Task_Manager t)
+    Worker_Thread(Task_Manager t)
     {
         this.T_manager = t;
     }
@@ -43,6 +44,8 @@ public class Worker_Thread extends Thread {
                 {
                     write(current_task.getHash_code());
                 }
+
+                getBackInList(this);
             }
             catch (InterruptedException|IOException|NoSuchAlgorithmException e)
             {
