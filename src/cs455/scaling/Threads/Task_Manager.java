@@ -32,9 +32,9 @@ public class Task_Manager extends Thread
         {
             try
             {
-                System.out.println("In the task_managers run method");
+//                System.out.println("In the task_managers run method");
                 int i = selector.select();
-                System.out.println("Ready threads: " +i);
+//                System.out.println("Ready channels: " +i);
 
                 if(i == 0)
                 {
@@ -50,8 +50,8 @@ public class Task_Manager extends Thread
 
                     if (key.isReadable())
                     {
-                        System.out.println("Channel is read ready..");
-                        System.out.println("Creating a read task");
+//                        System.out.println("Channel is read ready..");
+//                        System.out.println("Creating a read task");
                         Tasks read = new Tasks(0,(SocketChannel)key.channel());
                         Add_task(read);
                     }

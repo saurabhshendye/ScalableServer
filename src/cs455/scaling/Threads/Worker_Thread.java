@@ -54,13 +54,16 @@ public class Worker_Thread extends Thread {
         notify();
     }
 
-    private String read_and_hash() throws IOException, NoSuchAlgorithmException {
+    private String read_and_hash() throws IOException, NoSuchAlgorithmException
+    {
+
+        System.out.println("Worker thread read method");
 
         SocketChannel socketChannel = current_task.getChannel();
 
         ByteBuffer buf = ByteBuffer.allocate(8192);
         int bytesRead = socketChannel.read(buf);
-        System.out.println("Byte count in byte data: " +bytesRead);
+//        System.out.println("Byte count in byte data: " +bytesRead);
         byte [] dst = buf.array();
         while (buf.hasRemaining())
         {
@@ -69,7 +72,7 @@ public class Worker_Thread extends Thread {
 //            System.out.println("Byte count in byte data: " +bytesRead);
             dst = buf.array();
 //            System.out.println("Temp length: " +dst.length);
-            System.out.println(buf.remaining());
+//            System.out.println(buf.remaining());
         }
 
         String hash = SHA1FromBytes(dst);

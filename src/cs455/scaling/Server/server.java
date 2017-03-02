@@ -57,7 +57,7 @@ public class server {
 
             // Register with the selector
             taskManager.getRegistered(socketChannel);
-            System.out.println("We haven't reached here");
+//            System.out.println("We haven't reached here");
 
 
             // The code henceforth will be a part of worker threads read function
