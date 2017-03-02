@@ -34,13 +34,14 @@ public class Task_Manager extends Thread
             try
             {
 //                System.out.println("In the task_managers run method");
-                int i = selector.select();
+//                int i = selector.select();
+                selector.select();
 //                System.out.println("Ready channels: " +i);
 
-                if(i == 0)
-                {
-                    continue;
-                }
+//                if(i == 0)
+//                {
+//                    continue;
+//                }
 
                 Set<SelectionKey> selectedKeys = selector.selectedKeys();
                 Iterator<SelectionKey> keyIterator = selectedKeys.iterator();

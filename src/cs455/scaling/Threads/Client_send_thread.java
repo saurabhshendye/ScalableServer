@@ -27,41 +27,43 @@ public class Client_send_thread extends Thread
     }
     public void run()
     {
-        try {
-//            String newData = "New String to write to file..." + System.currentTimeMillis();
-//            System.out.println("Sending String: " +newData);
-//            byte[] b = newData.getBytes();
-
-            // Creating a payload and getting corresponding byte Array
-            payload p = new payload();
-            byte[] b = p.getByteArray();
-            System.out.println("Byte array length: " +b.length);
-
-            // Calculating the hash for given byte array
-            String hash = SHA1FromBytes(b);
-            System.out.println("Hash code for sent message: " +hash);
-
-            // Creating a Bytebuffer of 8KB size and bringing it to initial position
-            ByteBuffer buf = ByteBuffer.allocate(b.length);
-            buf.clear();
-
-            // Putting the byte array into the buffer and
-            // flipping it to make it write ready
-            buf.put(b);
-            buf.flip();
-
-            // Writing on the connected socket channel
-            while(buf.hasRemaining())
+        try
+        {
+            for (int i = 0; i < 2; i++)
             {
-                channel.write(buf);
+                // Creating a payload and getting corresponding byte Array
+                payload p = new payload();
+                byte[] b = p.getByteArray();
+                System.out.println("Byte array length: " +b.length);
+
+                // Calculating the hash for given byte array
+                String hash = SHA1FromBytes(b);
+                System.out.println("Hash code for sent message: " +hash);
+
+                // Creating a Bytebuffer of 8KB size and bringing it to initial position
+                ByteBuffer buf = ByteBuffer.allocate(b.length);
+                buf.clear();
+
+                // Putting the byte array into the buffer and
+                // flipping it to make it write ready
+                buf.put(b);
+                buf.flip();
+
+                // Writing on the connected socket channel
+                while(buf.hasRemaining())
+                {
+                    channel.write(buf);
+                }
+
+                // Clearing the current buffer and making it
+                // Write ready for the next iteration
+                buf.clear();
+
+
+                System.out.println("Done Writing");
             }
 
-            // Clearing the current buffer and making it
-            // Write ready for the next iteration
-            buf.clear();
 
-
-            System.out.println("Done Writing");
 
         }
         catch (IOException | NoSuchAlgorithmException e)
