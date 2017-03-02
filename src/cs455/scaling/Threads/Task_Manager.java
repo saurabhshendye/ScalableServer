@@ -85,7 +85,7 @@ public class Task_Manager extends Thread
         System.out.println("Added Read Task");
     }
 
-    synchronized Tasks get_task()
+    Tasks get_task()
     {
         return tasks.peekFirst();
     }
