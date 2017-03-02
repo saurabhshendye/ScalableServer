@@ -70,10 +70,10 @@ public class Task_Manager extends Thread
         }
     }
 
-    public synchronized void getRegistered(SocketChannel channel) throws ClosedChannelException
+    public void getRegistered(SocketChannel channel) throws ClosedChannelException
     {
         selector.wakeup();
-        SelectionKey key = channel.register(selector, interestSet);
+        channel.register(selector, interestSet);
         System.out.println("Registered the channel to a selector");
 
     }
