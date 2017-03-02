@@ -29,7 +29,7 @@ public class Client_send_thread extends Thread
     {
         try
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 20; i++)
             {
                 // Creating a payload and getting corresponding byte Array
                 payload p = new payload();
@@ -61,12 +61,13 @@ public class Client_send_thread extends Thread
 
 
                 System.out.println("Done Writing");
+                Thread.sleep(1000);
             }
 
 
 
         }
-        catch (IOException | NoSuchAlgorithmException e)
+        catch (IOException | NoSuchAlgorithmException |InterruptedException e)
         {
             e.printStackTrace();
         }
