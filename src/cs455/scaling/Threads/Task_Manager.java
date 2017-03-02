@@ -82,6 +82,7 @@ public class Task_Manager extends Thread
     synchronized void Add_task(Tasks task)
     {
         tasks.addLast(task);
+        System.out.println("Added Read Task");
     }
 
     synchronized Tasks get_task()

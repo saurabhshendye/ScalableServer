@@ -29,7 +29,7 @@ public class Client_send_thread extends Thread
     {
         try
         {
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 5; i++)
             {
                 // Creating a payload and getting corresponding byte Array
                 payload p = new payload();
