@@ -48,6 +48,7 @@ public class Worker_Thread extends Thread {
                 }
 
                 getBackInList(this);
+                System.out.println("Went back to list: " +this.getName());
             }
             catch (InterruptedException|IOException|NoSuchAlgorithmException e)
             {
@@ -88,7 +89,7 @@ public class Worker_Thread extends Thread {
         String hash = sha1Hash.SHA1FromBytes(dst);
         System.out.println("Hash for received String is: " +hash + "From thread: " +this.getName());
 
-        System.out.println("Done Reading");
+        System.out.println("Done Reading by: " +this.getName() + "-------" );
 
 
         return hash;

@@ -16,8 +16,8 @@ import java.util.Set;
 
 public class Task_Manager extends Thread
 {
-    private LinkedList<Tasks> tasks = new LinkedList<>();
-    private Selector selector = Selector.open();
+    private final LinkedList<Tasks> tasks = new LinkedList<>();
+    private final Selector selector = Selector.open();
     private int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 
 
@@ -78,7 +78,7 @@ public class Task_Manager extends Thread
 
     }
 
-    synchronized void Add_task(Tasks task)
+    void Add_task(Tasks task)
     {
         tasks.addLast(task);
         System.out.println("Added Read Task");

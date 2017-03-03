@@ -11,8 +11,8 @@ import java.util.LinkedList;
 
 public class ThreadPoolManager extends Thread
 {
-    private Task_Manager manager;
-    private static LinkedList<Worker_Thread> Thread_list = new LinkedList<>();
+    private final Task_Manager manager;
+    private final static LinkedList<Worker_Thread> Thread_list = new LinkedList<>();
 
 
     public ThreadPoolManager(int thread_count, Task_Manager M)
@@ -55,7 +55,7 @@ public class ThreadPoolManager extends Thread
         }
     }
 
-    public static void getBackInList(Worker_Thread worker)
+    static void getBackInList(Worker_Thread worker)
     {
         System.out.println(worker.getName() + " Back to the queue..");
         Thread_list.addLast(worker);
