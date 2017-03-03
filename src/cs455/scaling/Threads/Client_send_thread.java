@@ -6,13 +6,14 @@ package cs455.scaling.Threads;
 
 
 import cs455.scaling.WireFormats.payload;
+import cs455.scaling.util.sha1;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.security.NoSuchAlgorithmException;
 
-import static cs455.scaling.util.sha1.SHA1FromBytes;
+//import static cs455.scaling.util.sha1.SHA1FromBytes;
 
 public class Client_send_thread extends Thread
 {
@@ -37,7 +38,8 @@ public class Client_send_thread extends Thread
                 System.out.println("Byte array length: " +b.length);
 
                 // Calculating the hash for given byte array
-                String hash = SHA1FromBytes(b);
+                sha1 sha1Hash = new sha1();
+                String hash = sha1Hash.SHA1FromBytes(b);
                 System.out.println("Hash code for sent message: " +hash);
 
                 // Creating a Bytebuffer of 8KB size and bringing it to initial position
