@@ -10,7 +10,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class sha1 {
 
-    public static String SHA1FromBytes(byte [] data) throws NoSuchAlgorithmException
+    public sha1()
+    {
+
+    }
+    public String SHA1FromBytes(byte [] data) throws NoSuchAlgorithmException
     {
         MessageDigest digest = MessageDigest.getInstance("SHA1");
         byte [] hash = digest.digest(data);

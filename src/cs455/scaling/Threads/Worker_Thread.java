@@ -5,6 +5,7 @@ package cs455.scaling.Threads;
 
 
 import cs455.scaling.util.Tasks;
+import cs455.scaling.util.sha1;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -12,7 +13,7 @@ import java.nio.channels.SocketChannel;
 import java.security.NoSuchAlgorithmException;
 
 import static cs455.scaling.Threads.ThreadPoolManager.getBackInList;
-import static cs455.scaling.util.sha1.SHA1FromBytes;
+//import static cs455.scaling.util.sha1.SHA1FromBytes;
 
 public class Worker_Thread extends Thread {
 
@@ -83,7 +84,8 @@ public class Worker_Thread extends Thread {
 //            System.out.println(buf.remaining());
         }
 
-        String hash = SHA1FromBytes(dst);
+        sha1 sha1Hash = new sha1();
+        String hash = sha1Hash.SHA1FromBytes(dst);
         System.out.println("Hash for received String is: " +hash + "From thread: " +this.getName());
 
         System.out.println("Done Reading");
