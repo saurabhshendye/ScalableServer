@@ -19,8 +19,9 @@ public class Worker_Thread extends Thread {
     private Task_Manager T_manager;
     private static Tasks current_task;
 
-    Worker_Thread(Task_Manager t)
+    Worker_Thread(Task_Manager t, String name)
     {
+        super(name);
         this.T_manager = t;
     }
 

@@ -21,7 +21,7 @@ public class ThreadPoolManager extends Thread
         // starting the thread and adding it to Thread list
         for (int i = 0; i < thread_count; i++ )
         {
-            Worker_Thread W = new Worker_Thread(M);
+            Worker_Thread W = new Worker_Thread(M, "Thread-" +i);
 //            Thread thread = new Thread(W);
             Thread_list.add(W);
             W.start();
@@ -57,6 +57,7 @@ public class ThreadPoolManager extends Thread
 
     public static void getBackInList(Worker_Thread worker)
     {
+        System.out.println(worker.getName() + " Back to the queue..");
         Thread_list.addLast(worker);
     }
 }
