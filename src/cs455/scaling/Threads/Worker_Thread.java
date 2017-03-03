@@ -84,7 +84,7 @@ public class Worker_Thread extends Thread {
         }
 
         String hash = SHA1FromBytes(dst);
-        System.out.println("Hash for received String is: " +hash);
+        System.out.println("Hash for received String is: " +hash + "From thread: " +this.getName());
 
         System.out.println("Done Reading");
 
