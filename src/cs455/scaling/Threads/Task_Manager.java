@@ -86,7 +86,9 @@ public class Task_Manager extends Thread
 
     synchronized Tasks get_task()
     {
-        return tasks.peekFirst();
+        Tasks Temp = tasks.peekFirst();
+        tasks.remove(Temp);
+        return Temp;
     }
 
     synchronized void remove_task(Tasks task)

@@ -47,7 +47,7 @@ public class ThreadPoolManager extends Thread
                     Thread_list.remove(worker);
 
                     Tasks task = manager.get_task();
-                    manager.remove_task(task);
+//                    manager.remove_task(task);
 
                     worker.setDone(task);
                 }

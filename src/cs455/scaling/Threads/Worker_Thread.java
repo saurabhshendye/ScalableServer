@@ -48,7 +48,7 @@ public class Worker_Thread extends Thread {
                 }
 
                 getBackInList(this);
-                System.out.println("Went back to list: " +this.getName());
+//                System.out.println("Went back to list: " +this.getName());
             }
             catch (InterruptedException|IOException|NoSuchAlgorithmException e)
             {

@@ -15,7 +15,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.security.NoSuchAlgorithmException;
 
-import static cs455.scaling.util.sha1.SHA1FromBytes;
+//import static cs455.scaling.util.sha1.SHA1FromBytes;
 
 
 public class server {
