@@ -26,7 +26,7 @@ public class Task_Manager extends Thread
 //        this.selector = S;
     }
 
-    public void run()
+    public synchronized void run()
     {
 
         while (true)
@@ -57,7 +57,7 @@ public class Task_Manager extends Thread
 //                        System.out.println("Creating a read task");
                         Tasks read = new Tasks(0,(SocketChannel)key.channel());
                         Add_task(read);
-                        System.out.println("task type: " + read.getType());
+//                        System.out.println("task type: " + read.getType());
                         key.cancel();
                     }
 
@@ -71,7 +71,7 @@ public class Task_Manager extends Thread
         }
     }
 
-    public void getRegistered(SocketChannel channel) throws ClosedChannelException
+    public synchronized void getRegistered(SocketChannel channel) throws ClosedChannelException
     {
         selector.wakeup();
         channel.register(selector, interestSet);

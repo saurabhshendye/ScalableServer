@@ -44,7 +44,7 @@ public class ThreadPoolManager extends Thread
 
                     Tasks task = manager.get_task();
                     manager.remove_task(task);
-                    System.out.println("Task Type: "+task.getType());
+//                    System.out.println("Task Type: "+task.getType());
                     worker.setDone(task);
                 }
             }
