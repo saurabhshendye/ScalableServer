@@ -37,11 +37,7 @@ public class ThreadPoolManager extends Thread
         {
             if (manager.get_task() != null)
             {
-                if (Thread_list.peekFirst() == null)
-                {
-                    continue;
-                }
-                else
+                if (Thread_list.peekFirst() != null)
                 {
                     Worker_Thread worker = Thread_list.peekFirst();
                     Thread_list.remove(worker);
