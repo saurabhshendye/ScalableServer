@@ -5,15 +5,16 @@
 package cs455.scaling.Server;
 
 
-import cs455.scaling.Threads.Stats_Printer;
-import cs455.scaling.Threads.Task_Manager;
+import cs455.scaling.util.Task_Manager;
 import cs455.scaling.Threads.ThreadPoolManager;
+import cs455.scaling.util.Tasks;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
+import java.util.Set;
 
 //import static cs455.scaling.util.sha1.SHA1FromBytes;
 
@@ -22,12 +23,12 @@ public class server {
 
 //    private static int Thread_count;
 //    private static int port;
-//    private static Selector selector;
-    private static int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
+    private static Selector selector;
+//    private static int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 
     public static void main(String [] args) throws IOException, NoSuchAlgorithmException {
         // Opening a selector
-//        selector = Selector.open();
+        selector = Selector.open();
 
         // Accepting the inputs from command line
         int port = Integer.parseInt(args[0]);
@@ -36,11 +37,12 @@ public class server {
         // Creating a server Socket channel using java nio package
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.socket().bind(new InetSocketAddress(port));
-        System.out.println("Server socket created");
+        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+        System.out.println("Server socket created and registered ");
 
         // Creating a task allocator object
         Task_Manager taskManager = new Task_Manager();
-        taskManager.start();
+//        taskManager.start();
 
         // Creating a ThreadPoolManager object
         ThreadPoolManager poolManager = new ThreadPoolManager(Thread_count, taskManager);
@@ -49,14 +51,45 @@ public class server {
         // Listening for the connections
         while (true)
         {
+            selector.select();
+
+            Set<SelectionKey> selectedKeys = selector.selectedKeys();
+            Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
+
+            while (keyIterator.hasNext())
+            {
+                SelectionKey key = keyIterator.next();
+                keyIterator.remove();
+                if (key.isAcceptable())
+                {
+                    // Accept a new connection and register the socket channel to selector
+                    System.out.println("Accepted a new connection");
+                    SocketChannel socketChannel = serverSocketChannel.accept();
+                    socketChannel.configureBlocking(false);
+                    socketChannel.register(selector, SelectionKey.OP_READ);
+
+                    // Removed the current key so as to check on other keys
+                    selectedKeys.remove(key);
+
+                    // Put the serversocketchannel key back in queue(Last position)
+                    serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+                }
+                else if (key.isReadable())
+                {
+                    Tasks read = new Tasks(0,(SocketChannel)key.channel());
+                    taskManager.Add_task(read);
+
+                    key.cancel();
+                }
+            }
+
             // Creating a socketchannnel for incoming connections
-            // and allocating a buffer of size 8KB
-            SocketChannel socketChannel = serverSocketChannel.accept();
-            System.out.println("Accepted a new connection");
-            socketChannel.configureBlocking(false);
+//            SocketChannel socketChannel = serverSocketChannel.accept();
+
+
 
             // Register with the selector
-            taskManager.getRegistered(socketChannel);
+//            taskManager.getRegistered(socketChannel);
 //            System.out.println("We haven't reached here");
 
 

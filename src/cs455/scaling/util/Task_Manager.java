@@ -1,7 +1,7 @@
 /*
  * Created by saurabh on 2/28/2017.
  */
-package cs455.scaling.Threads;
+package cs455.scaling.util;
 
 import cs455.scaling.util.Tasks;
 
@@ -26,7 +26,7 @@ public class Task_Manager extends Thread
 //        this.selector = S;
     }
 
-    public synchronized void run()
+    public void run()
     {
 
         while (true)
@@ -71,7 +71,7 @@ public class Task_Manager extends Thread
         }
     }
 
-    public synchronized void getRegistered(SocketChannel channel) throws ClosedChannelException
+    public void getRegistered(SocketChannel channel) throws ClosedChannelException
     {
         selector.wakeup();
         channel.register(selector, interestSet);
@@ -79,7 +79,7 @@ public class Task_Manager extends Thread
 
     }
 
-    void Add_task(Tasks task)
+    public void Add_task(Tasks task)
     {
         tasks.addLast(task);
         System.out.println("Added Read Task");
