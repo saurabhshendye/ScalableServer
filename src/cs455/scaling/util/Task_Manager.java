@@ -97,4 +97,9 @@ public class Task_Manager extends Thread
         tasks.removeFirst();
     }
 
+    public void Task_count()
+    {
+        System.out.println("Task Size: " +tasks.size());
+    }
+
 }
