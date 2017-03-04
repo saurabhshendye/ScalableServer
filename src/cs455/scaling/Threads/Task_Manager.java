@@ -57,6 +57,7 @@ public class Task_Manager extends Thread
 //                        System.out.println("Creating a read task");
                         Tasks read = new Tasks(0,(SocketChannel)key.channel());
                         Add_task(read);
+                        System.out.println("task type: " + read.getType());
                         key.cancel();
                     }
 
@@ -87,11 +88,11 @@ public class Task_Manager extends Thread
     synchronized Tasks get_task()
     {
         Tasks Temp = tasks.peekFirst();
-        tasks.remove(Temp);
+//        tasks.remove(Temp);
         return Temp;
     }
 
-    synchronized void remove_task(Tasks task)
+    void remove_task(Tasks task)
     {
         tasks.remove(task);
     }
