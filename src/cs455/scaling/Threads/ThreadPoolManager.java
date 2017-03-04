@@ -5,6 +5,7 @@
 package cs455.scaling.Threads;
 
 
+import cs455.scaling.util.SelectorManager;
 import cs455.scaling.util.Task_Manager;
 import cs455.scaling.util.Tasks;
 
@@ -14,15 +15,16 @@ public class ThreadPoolManager extends Thread
 {
     private final Task_Manager manager;
     private final static LinkedList<Worker_Thread> Thread_list = new LinkedList<>();
+    private final SelectorManager selectorManager;
 
 
-    public ThreadPoolManager(int thread_count, Task_Manager M)
+    public ThreadPoolManager(int thread_count, Task_Manager M, SelectorManager selectorManager)
     {
         // Creating the requested number of threads,
         // starting the thread and adding it to Thread list
         for (int i = 0; i < thread_count; i++ )
         {
-            Worker_Thread W = new Worker_Thread(M, "Thread-" +i);
+            Worker_Thread W = new Worker_Thread(M, "Thread-" +i, selectorManager);
 //            Thread thread = new Thread(W);
             Thread_list.add(W);
             W.start();
@@ -30,6 +32,7 @@ public class ThreadPoolManager extends Thread
         System.out.println("Created the requested number of threads");
 
         this.manager = M;
+        this.selectorManager = selectorManager;
     }
 
     public void run()

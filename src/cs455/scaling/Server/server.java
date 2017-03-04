@@ -50,7 +50,7 @@ public class server {
 //        taskManager.start();
 
         // Creating a ThreadPoolManager object
-        ThreadPoolManager poolManager = new ThreadPoolManager(Thread_count, taskManager);
+        ThreadPoolManager poolManager = new ThreadPoolManager(Thread_count, taskManager, selectorManager);
         poolManager.start();
 
         // Listening for the connections
