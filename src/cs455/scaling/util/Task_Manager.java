@@ -17,8 +17,8 @@ import java.util.Set;
 public class Task_Manager extends Thread
 {
     private final LinkedList<Tasks> tasks = new LinkedList<>();
-    private final Selector selector = Selector.open();
-    private int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
+//    private final Selector selector = Selector.open();
+//    private int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 
 
     public Task_Manager() throws IOException
