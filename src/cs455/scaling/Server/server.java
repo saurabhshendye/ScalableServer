@@ -38,6 +38,7 @@ public class server {
         // Creating a server Socket channel using java nio package
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.socket().bind(new InetSocketAddress(port));
+        serverSocketChannel.configureBlocking(false);
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         System.out.println("Server socket created and registered ");
 

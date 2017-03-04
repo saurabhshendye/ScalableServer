@@ -4,6 +4,7 @@
 package cs455.scaling.Threads;
 
 
+import cs455.scaling.util.SelectorManager;
 import cs455.scaling.util.Task_Manager;
 import cs455.scaling.util.Tasks;
 import cs455.scaling.util.sha1;
@@ -20,11 +21,13 @@ public class Worker_Thread extends Thread {
 
     private Task_Manager T_manager;
     private static Tasks current_task;
+    private final SelectorManager selectorManager;
 
-    Worker_Thread(Task_Manager t, String name)
+    Worker_Thread(Task_Manager t, String name, SelectorManager selectorManager)
     {
         super(name);
         this.T_manager = t;
+        this.selectorManager = selectorManager;
     }
 
     public synchronized void run()
@@ -40,6 +43,7 @@ public class Worker_Thread extends Thread {
                     String hash = read_and_hash();
                     Tasks new_task = new Tasks(1,hash,channel);
                     T_manager.Add_task(new_task);
+                    selectorManager.getRegistered(channel);
 //                    T_manager.getRegistered(channel);
 
 
