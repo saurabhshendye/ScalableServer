@@ -5,6 +5,7 @@
 package cs455.scaling.Threads;
 
 
+import cs455.scaling.util.Task_Manager;
 import cs455.scaling.util.Tasks;
 
 import java.util.LinkedList;
@@ -43,7 +44,7 @@ public class ThreadPoolManager extends Thread
                     Thread_list.remove(worker);
 
                     Tasks task = manager.get_task();
-                    manager.remove_task(task);
+                    manager.remove_task();
 //                    System.out.println("Task Type: "+task.getType());
                     worker.setDone(task);
                 }

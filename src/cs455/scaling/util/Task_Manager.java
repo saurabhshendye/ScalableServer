@@ -26,58 +26,58 @@ public class Task_Manager extends Thread
 //        this.selector = S;
     }
 
-    public void run()
-    {
-
-        while (true)
-        {
-            try
-            {
-//                System.out.println("In the task_managers run method");
-//                int i = selector.select();
-                selector.select();
-//                System.out.println("Ready channels: " +i);
-
-//                if(i == 0)
+//    public void run()
+//    {
+//
+//        while (true)
+//        {
+//            try
+//            {
+////                System.out.println("In the task_managers run method");
+////                int i = selector.select();
+//                selector.select();
+////                System.out.println("Ready channels: " +i);
+//
+////                if(i == 0)
+////                {
+////                    continue;
+////                }
+//
+//                Set<SelectionKey> selectedKeys = selector.selectedKeys();
+//                Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
+//
+//                while (keyIterator.hasNext())
 //                {
-//                    continue;
+//                    SelectionKey key = keyIterator.next();
+//                    keyIterator.remove();
+//
+//                    if (key.isReadable())
+//                    {
+////                        System.out.println("Channel is read ready..");
+////                        System.out.println("Creating a read task");
+//                        Tasks read = new Tasks(0,(SocketChannel)key.channel());
+//                        Add_task(read);
+////                        System.out.println("task type: " + read.getType());
+//                        key.cancel();
+//                    }
+//
 //                }
+//            }
+//            catch (IOException e)
+//            {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
 
-                Set<SelectionKey> selectedKeys = selector.selectedKeys();
-                Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
-
-                while (keyIterator.hasNext())
-                {
-                    SelectionKey key = keyIterator.next();
-                    keyIterator.remove();
-
-                    if (key.isReadable())
-                    {
-//                        System.out.println("Channel is read ready..");
-//                        System.out.println("Creating a read task");
-                        Tasks read = new Tasks(0,(SocketChannel)key.channel());
-                        Add_task(read);
-//                        System.out.println("task type: " + read.getType());
-                        key.cancel();
-                    }
-
-                }
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-
-        }
-    }
-
-    public void getRegistered(SocketChannel channel) throws ClosedChannelException
-    {
-        selector.wakeup();
-        channel.register(selector, interestSet);
-        System.out.println("Registered the channel to a selector");
-
-    }
+//    public void getRegistered(SocketChannel channel) throws ClosedChannelException
+//    {
+//        selector.wakeup();
+//        channel.register(selector, interestSet);
+//        System.out.println("Registered the channel to a selector");
+//
+//    }
 
     public void Add_task(Tasks task)
     {
@@ -85,16 +85,16 @@ public class Task_Manager extends Thread
         System.out.println("Added Read Task");
     }
 
-    synchronized Tasks get_task()
+    public Tasks get_task()
     {
         Tasks Temp = tasks.peekFirst();
 //        tasks.remove(Temp);
         return Temp;
     }
 
-    void remove_task(Tasks task)
+    public void remove_task()
     {
-        tasks.remove(task);
+        tasks.removeFirst();
     }
 
 }

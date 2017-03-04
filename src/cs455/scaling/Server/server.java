@@ -5,6 +5,7 @@
 package cs455.scaling.Server;
 
 
+import cs455.scaling.util.SelectorManager;
 import cs455.scaling.util.Task_Manager;
 import cs455.scaling.Threads.ThreadPoolManager;
 import cs455.scaling.util.Tasks;
@@ -39,6 +40,9 @@ public class server {
         serverSocketChannel.socket().bind(new InetSocketAddress(port));
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         System.out.println("Server socket created and registered ");
+
+        // Creating a selector manager
+        SelectorManager selectorManager = new SelectorManager(selector);
 
         // Creating a task allocator object
         Task_Manager taskManager = new Task_Manager();
