@@ -133,8 +133,8 @@ public class server {
 
     private static void increment_counter()
     {
-        System.out.println("Received Messages: " +messageCouter);
         messageCouter++;
+        System.out.println("Received Messages: " +messageCouter);
     }
 
 //    private static void getRegistered(SocketChannel channel) throws ClosedChannelException

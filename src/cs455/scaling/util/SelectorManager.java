@@ -17,7 +17,7 @@ public class SelectorManager
         this.selector = S;
     }
 
-    public synchronized void getRegistered(SocketChannel channel) throws ClosedChannelException
+    public void getRegistered(SocketChannel channel) throws ClosedChannelException
     {
 
         selector.wakeup();
