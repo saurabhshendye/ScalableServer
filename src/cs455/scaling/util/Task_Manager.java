@@ -84,9 +84,9 @@ public class Task_Manager extends Thread
     {
         synchronized (this){
             tasks.add(task);
-            notifyAll();
+            notify();
         }
-        System.out.println("Added Read Task");
+//        System.out.println("Added Read Task");
     }
 
 //    public synchronized Tasks get_task()
@@ -96,7 +96,7 @@ public class Task_Manager extends Thread
         {
             if (tasks.size() <= 0)
             {
-                System.out.println(tasks.size());
+//                System.out.println(tasks.size());
                 wait();
             }
         }

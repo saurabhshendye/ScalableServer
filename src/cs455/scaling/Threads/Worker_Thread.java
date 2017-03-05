@@ -74,7 +74,7 @@ public class Worker_Thread extends Thread {
     private String read_and_hash() throws IOException, NoSuchAlgorithmException
     {
 
-        System.out.println("Worker thread read method");
+//        System.out.println("Worker thread read method");
 
         SocketChannel socketChannel = current_task.getChannel();
 

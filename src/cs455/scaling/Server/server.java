@@ -22,6 +22,7 @@ import java.util.Set;
 public class server {
 
     private static Selector selector;
+    private static int messageCouter = 0;
 
     public static void main(String [] args) throws IOException, NoSuchAlgorithmException {
         // Opening a selector
@@ -79,7 +80,7 @@ public class server {
                 {
                     Tasks read = new Tasks(0,(SocketChannel)key.channel());
                     taskManager.Add_task(read);
-
+                    increment_counter();
                     key.cancel();
                 }
             }
@@ -128,6 +129,12 @@ public class server {
 //                socketChannel.write(buf_w);
 //            }
         }
+    }
+
+    private static void increment_counter()
+    {
+        System.out.println("Received Messages: " +messageCouter);
+        messageCouter++;
     }
 
 //    private static void getRegistered(SocketChannel channel) throws ClosedChannelException
