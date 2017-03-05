@@ -25,12 +25,20 @@ public class ThreadPoolManager
             Worker_Thread W = new Worker_Thread(M, "Thread-" +i, selectorManager);
 //            Thread thread = new Thread(W);
             Thread_list.add(W);
-            W.start();
+
         }
         System.out.println("Created the requested number of threads");
 
         this.manager = M;
         this.selectorManager = selectorManager;
+    }
+
+    public void start()
+    {
+        for (Worker_Thread worker : Thread_list)
+        {
+            worker.start();
+        }
     }
 
 //    public void run()

@@ -64,7 +64,7 @@ public class Worker_Thread extends Thread {
 //                getBackInList(this);
 //                System.out.println("Went back to list: " +this.getName());
             }
-            catch (InterruptedException|IOException|NoSuchAlgorithmException e)
+            catch (InterruptedException|IOException|NoSuchAlgorithmException|NullPointerException e)
             {
                 e.printStackTrace();
             }
@@ -131,7 +131,9 @@ public class Worker_Thread extends Thread {
 //
 //            buf.clear();
 
+
             System.out.println("Written by: " +this.getName());
+//            selector.close();
         }
     }
 
