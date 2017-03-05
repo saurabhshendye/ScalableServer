@@ -84,23 +84,19 @@ public class Task_Manager extends Thread
     {
         synchronized (this){
             tasks.add(task);
-            notify();
+            notifyAll();
         }
-
         System.out.println("Added Read Task");
     }
 
 //    public synchronized Tasks get_task()
     public Tasks get_task() throws InterruptedException {
-//        Tasks Temp = tasks.peekFirst();
-//        this.Task_count();
-//        tasks.remove(Temp);
-//        return Temp;
 
         synchronized (this)
         {
             if (tasks.size() <= 0)
             {
+                System.out.println(tasks.size());
                 wait();
             }
         }

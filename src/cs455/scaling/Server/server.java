@@ -17,15 +17,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.Set;
 
-//import static cs455.scaling.util.sha1.SHA1FromBytes;
 
 
 public class server {
 
-//    private static int Thread_count;
-//    private static int port;
     private static Selector selector;
-//    private static int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 
     public static void main(String [] args) throws IOException, NoSuchAlgorithmException {
         // Opening a selector
@@ -83,16 +79,10 @@ public class server {
                 {
                     Tasks read = new Tasks(0,(SocketChannel)key.channel());
                     taskManager.Add_task(read);
-//                    taskManager.Task_count();
 
-//                    if (taskManager.get_task() == null)
-//                    {
-//                        System.out.println("Null found");
-//                    }
                     key.cancel();
                 }
             }
-
             // Creating a socketchannnel for incoming connections
 //            SocketChannel socketChannel = serverSocketChannel.accept();
 
