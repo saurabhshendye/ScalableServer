@@ -19,7 +19,9 @@ public class SelectorManager
 
     public void getRegistered(SocketChannel channel) throws ClosedChannelException
     {
-        System.out.println("Getting Re-registered");
+
+        selector.wakeup();
         channel.register(selector, SelectionKey.OP_READ);
+        System.out.println("Getting Re-registered");
     }
 }

@@ -14,7 +14,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.security.NoSuchAlgorithmException;
 
-import static cs455.scaling.Threads.ThreadPoolManager.getBackInList;
+//import static cs455.scaling.util.ThreadPoolManager.getBackInList;
 //import static cs455.scaling.util.sha1.SHA1FromBytes;
 
 public class Worker_Thread extends Thread {
@@ -23,37 +23,43 @@ public class Worker_Thread extends Thread {
     private static Tasks current_task;
     private final SelectorManager selectorManager;
 
-    Worker_Thread(Task_Manager t, String name, SelectorManager selectorManager)
+    public Worker_Thread(Task_Manager t, String name, SelectorManager selectorManager)
     {
         super(name);
         this.T_manager = t;
         this.selectorManager = selectorManager;
     }
 
-    public synchronized void run()
+    public void run()
     {
         while (true)
         {
             try
             {
-                wait();
-                if (current_task.getType() == 0)
+                current_task = T_manager.get_task();
+//                wait();
+
+                if (current_task != null)
                 {
-                    SocketChannel channel = current_task.getChannel();
-                    String hash = read_and_hash();
-                    Tasks new_task = new Tasks(1,hash,channel);
-                    T_manager.Add_task(new_task);
-                    selectorManager.getRegistered(channel);
+                    if (current_task.getType() == 0)
+                    {
+                        SocketChannel channel = current_task.getChannel();
+                        String hash = read_and_hash();
+                        Tasks new_task = new Tasks(1,hash,channel);
+                        T_manager.Add_task(new_task);
+                        selectorManager.getRegistered(channel);
 //                    T_manager.getRegistered(channel);
 
 
-                }
-                else if (current_task.getType() == 1)
-                {
-                    write(current_task.getHash_code());
+                    }
+                    else if (current_task.getType() == 1)
+                    {
+                        write(current_task.getHash_code());
+                    }
                 }
 
-                getBackInList(this);
+
+//                getBackInList(this);
 //                System.out.println("Went back to list: " +this.getName());
             }
             catch (InterruptedException|IOException|NoSuchAlgorithmException e)
@@ -63,12 +69,7 @@ public class Worker_Thread extends Thread {
         }
     }
 
-    synchronized void setDone(Tasks task)
-    {
-        System.out.println("Set Done");
-        current_task = task;
-        notify();
-    }
+
 
     private String read_and_hash() throws IOException, NoSuchAlgorithmException
     {
@@ -93,9 +94,9 @@ public class Worker_Thread extends Thread {
 
         sha1 sha1Hash = new sha1();
         String hash = sha1Hash.SHA1FromBytes(dst);
-        System.out.println("Hash for received String is: " +hash + "From thread: " +this.getName());
+        System.out.println("Hash for received String is: " +hash + " From thread: " +this.getName());
 
-        System.out.println("Done Reading by: " +this.getName() + "-------" );
+        System.out.println("Done Reading by: " + this.getName() + "-------" );
 
 
         return hash;
@@ -104,5 +105,12 @@ public class Worker_Thread extends Thread {
     private void write(String hash_code)
     {
         System.out.println("Written by: " +this.getName());
+    }
+
+    void setDone(Tasks task)
+    {
+        System.out.println("Set Done");
+        current_task = task;
+        notify();
     }
 }

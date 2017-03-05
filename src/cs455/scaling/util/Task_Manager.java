@@ -10,21 +10,22 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
 public class Task_Manager extends Thread
 {
-    private final LinkedList<Tasks> tasks = new LinkedList<>();
+    private final Deque<Tasks> tasks = new LinkedList<>();
 //    private final Selector selector = Selector.open();
 //    private int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 
 
-    public Task_Manager() throws IOException
-    {
-//        this.selector = S;
-    }
+//    public Task_Manager() throws IOException
+//    {
+////        this.selector = S;
+//    }
 
 //    public void run()
 //    {
@@ -81,25 +82,49 @@ public class Task_Manager extends Thread
 
     public void Add_task(Tasks task)
     {
-        tasks.addLast(task);
+        synchronized (this){
+            tasks.add(task);
+            notify();
+        }
+
         System.out.println("Added Read Task");
     }
 
-    public Tasks get_task()
-    {
-        Tasks Temp = tasks.peekFirst();
+//    public synchronized Tasks get_task()
+    public Tasks get_task() throws InterruptedException {
+//        Tasks Temp = tasks.peekFirst();
+//        this.Task_count();
 //        tasks.remove(Temp);
-        return Temp;
+//        return Temp;
+
+        synchronized (this)
+        {
+            if (tasks.size() <= 0)
+            {
+                wait();
+            }
+        }
+
+        if (tasks.size() <=0)
+        {
+            return null;
+        }
+        else
+        {
+            return tasks.pollFirst();
+        }
+
     }
 
-    public void remove_task()
-    {
-        tasks.removeFirst();
-    }
-
-    public void Task_count()
-    {
-        System.out.println("Task Size: " +tasks.size());
-    }
+//    public void remove_task()
+//    {
+//        tasks.removeFirst();
+//    }
+//
+//    public int Task_count()
+//    {
+//        return tasks.size();
+////        System.out.println("Task Size: " +tasks.size());
+//    }
 
 }

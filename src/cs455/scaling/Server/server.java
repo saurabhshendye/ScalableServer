@@ -7,7 +7,7 @@ package cs455.scaling.Server;
 
 import cs455.scaling.util.SelectorManager;
 import cs455.scaling.util.Task_Manager;
-import cs455.scaling.Threads.ThreadPoolManager;
+import cs455.scaling.util.ThreadPoolManager;
 import cs455.scaling.util.Tasks;
 
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class server {
 
         // Creating a ThreadPoolManager object
         ThreadPoolManager poolManager = new ThreadPoolManager(Thread_count, taskManager, selectorManager);
-        poolManager.start();
+//        poolManager.start();
 
         // Listening for the connections
         while (true)
@@ -83,7 +83,12 @@ public class server {
                 {
                     Tasks read = new Tasks(0,(SocketChannel)key.channel());
                     taskManager.Add_task(read);
+//                    taskManager.Task_count();
 
+//                    if (taskManager.get_task() == null)
+//                    {
+//                        System.out.println("Null found");
+//                    }
                     key.cancel();
                 }
             }
