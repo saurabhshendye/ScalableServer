@@ -11,6 +11,8 @@ import cs455.scaling.WireFormats.payload;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
@@ -41,12 +43,23 @@ public class client {
         send_T.start();
 
 
-        ByteBuffer buf = ByteBuffer.allocate(40);
-        int bytesRead = socketChannel.read(buf);
-        System.out.println("Byte count in byte data: " +bytesRead);
-        byte [] dst = buf.array();
-        String hash = new String(dst);
-        System.out.println("Received Hash: " +hash);
+        Selector selector = Selector.open();
+        SelectionKey key = socketChannel.register(selector, SelectionKey.OP_READ);
+
+        while (true)
+        {
+            if (key.isReadable())
+            {
+                ByteBuffer buf = ByteBuffer.allocate(40);
+                int bytesRead = socketChannel.read(buf);
+                System.out.println("Byte count in byte data: " +bytesRead);
+                byte [] dst = buf.array();
+                String hash = new String(dst);
+                System.out.println("Received Hash: " +hash);
+            }
+
+        }
+
 
 
 //        String newData = "New String to write to file..." + System.currentTimeMillis();

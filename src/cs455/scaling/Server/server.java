@@ -22,7 +22,7 @@ import java.util.Set;
 public class server {
 
     private static Selector selector;
-    private static int messageCouter = 0;
+    private static int messageCounter = 0;
 
     public static void main(String [] args) throws IOException, NoSuchAlgorithmException {
         // Opening a selector
@@ -133,8 +133,13 @@ public class server {
 
     private static void increment_counter()
     {
-        messageCouter++;
-        System.out.println("Received Messages: " +messageCouter);
+        messageCounter++;
+        System.out.println("Received Messages: " +messageCounter);
+    }
+
+    private static void backToZero()
+    {
+        messageCounter = 0;
     }
 
 //    private static void getRegistered(SocketChannel channel) throws ClosedChannelException
