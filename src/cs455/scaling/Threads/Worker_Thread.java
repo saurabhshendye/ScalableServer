@@ -106,36 +106,36 @@ public class Worker_Thread extends Thread {
 
     private void write(String hash_code) throws IOException
     {
-        SocketChannel channel = current_task.getChannel();
-//        Selector selector = Selector.open();
-
-//        SelectionKey key = channel.register(selector, SelectionKey.OP_WRITE);
-
-//        while (key.isValid())
-        {
-//            int i  = selector.select();
-//            if (key.isWritable())
-            {
-                byte[] hash_bytes = hash_code.getBytes();
-
-                ByteBuffer buf = ByteBuffer.allocate(40);
-                buf.clear();
-
-                buf.put(hash_bytes);
-
-                buf.flip();
-
-                while (buf.hasRemaining())
-                {
-
-                    channel.write(buf);
-                }
-
-                buf.clear();
-            }
-
-        }
-//        selector.close();
+//        SocketChannel channel = current_task.getChannel();
+////        Selector selector = Selector.open();
+//
+////        SelectionKey key = channel.register(selector, SelectionKey.OP_WRITE);
+//
+////        while (key.isValid())
+//        {
+////            int i  = selector.select();
+////            if (key.isWritable())
+//            {
+//                byte[] hash_bytes = hash_code.getBytes();
+//
+//                ByteBuffer buf = ByteBuffer.allocate(40);
+//                buf.clear();
+//
+//                buf.put(hash_bytes);
+//
+//                buf.flip();
+//
+//                while (buf.hasRemaining())
+//                {
+//
+//                    channel.write(buf);
+//                }
+//
+//                buf.clear();
+//            }
+//
+//        }
+////        selector.close();
         System.out.println("Written by: " +this.getName());
     }
 
