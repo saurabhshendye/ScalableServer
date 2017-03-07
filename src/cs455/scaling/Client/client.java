@@ -66,7 +66,7 @@ public class client {
                         if (key.isReadable())
                         {
                             System.out.println("key is readable now........");
-                            ByteBuffer buf = ByteBuffer.allocate(39);
+                            ByteBuffer buf = ByteBuffer.allocate(40);
                             int bytesRead = socketChannel.read(buf);
                             System.out.println("Byte count in byte data: " +bytesRead);
                             byte [] dst = buf.array();
