@@ -54,9 +54,10 @@ public class server {
         // Listening for the connections
         while (true)
         {
-            int i = selector.select(1);
+//            int i = selector.select(1);
 
-            if (i> 0)
+            selector.select();
+//            if (i> 0)
             {
                 Set<SelectionKey> selectedKeys = selector.selectedKeys();
                 Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
