@@ -48,8 +48,7 @@ public class client {
         SelectionKey key = socketChannel.register(selector, SelectionKey.OP_READ);
 
 
-//        while (true)
-
+        while (true)
         {
             while (key.isValid())
             {
@@ -71,12 +70,12 @@ public class client {
                     removeCode(hash);
                     key.cancel();
 
-                    key = socketChannel.register(selector, SelectionKey.OP_READ);
                 }
             }
+            key = socketChannel.register(selector, SelectionKey.OP_READ);
         }
 
-        System.out.println("Invalid Key found........");
+//        System.out.println("Invalid Key found........");
 
 
     }
