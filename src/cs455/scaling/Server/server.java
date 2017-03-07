@@ -91,6 +91,10 @@ public class server {
                     }
                 }
             }
+            else if (i<=0)
+            {
+                selectorManager.clearWaitingRequests();
+            }
 
             // Creating a socketchannnel for incoming connections
 //            SocketChannel socketChannel = serverSocketChannel.accept();
