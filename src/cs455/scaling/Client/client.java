@@ -76,7 +76,7 @@ public class client {
 
                         selectedKeys.remove(key);
 
-                        key = socketChannel.register(selector, SelectionKey.OP_WRITE);
+                        key = socketChannel.register(selector, SelectionKey.OP_READ);
                     }
                 }
             }
