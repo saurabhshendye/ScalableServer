@@ -83,6 +83,7 @@ public class client {
 
     private static void removeCode(String hash)
     {
+        System.out.println("Match found.. Removing from the list");
         HashCodeList.remove(hash);
     }
 }
