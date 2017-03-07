@@ -117,7 +117,7 @@ public class Worker_Thread extends Thread {
         {
             if (key.isWritable() && i>0)
             {
-                byte [] hash_bytes = hash_code.getBytes();
+                byte[] hash_bytes = hash_code.getBytes();
 
                 ByteBuffer buf = ByteBuffer.allocate(40);
                 buf.clear();
@@ -128,18 +128,17 @@ public class Worker_Thread extends Thread {
 
                 while (buf.hasRemaining())
                 {
+
                     channel.write(buf);
                 }
 
                 buf.clear();
-
+            }
+            System.out.println("Written by: " +this.getName());
         }
-
-        System.out.println("Written by: " +this.getName());
-
             selector.close();
-        }
     }
+
 
     void setDone(Tasks task)
     {
