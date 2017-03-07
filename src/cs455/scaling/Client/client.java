@@ -55,33 +55,37 @@ public class client {
 //            while (key.isValid())
             {
                 int i  = selector.select();
-                Set<SelectionKey> selectedKeys = selector.selectedKeys();
-                Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
-                while (keyIterator.hasNext())
+                if (i> 0)
                 {
-                    SelectionKey key = keyIterator.next();
-                    keyIterator.remove();
-                    if (i > 0 && key.isReadable())
+                    Set<SelectionKey> selectedKeys = selector.selectedKeys();
+                    Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
+                    while (keyIterator.hasNext())
                     {
-                        System.out.println("key is readable now........");
-                        ByteBuffer buf = ByteBuffer.allocate(39);
-                        int bytesRead = socketChannel.read(buf);
-                        System.out.println("Byte count in byte data: " +bytesRead);
-                        byte [] dst = buf.array();
-                        while (buf.hasRemaining())
+                        SelectionKey key = keyIterator.next();
+                        keyIterator.remove();
+                        if (key.isReadable())
                         {
-                            dst = buf.array();
-                        }
-                        String hash = new String(dst);
-                        System.out.println("Received Hash: " +hash);
+                            System.out.println("key is readable now........");
+                            ByteBuffer buf = ByteBuffer.allocate(39);
+                            int bytesRead = socketChannel.read(buf);
+                            System.out.println("Byte count in byte data: " +bytesRead);
+                            byte [] dst = buf.array();
+                            while (buf.hasRemaining())
+                            {
+                                dst = buf.array();
+                            }
+                            String hash = new String(dst);
+                            System.out.println("Received Hash: " +hash);
 //                        buf.clear();
-                        removeCode(hash);
+                            removeCode(hash);
 
 //                        selectedKeys.remove(key);
-                        key.cancel();
-                        socketChannel.register(selector, SelectionKey.OP_READ);
+                            key.cancel();
+                            socketChannel.register(selector, SelectionKey.OP_READ);
+                        }
                     }
                 }
+
             }
 
         }
