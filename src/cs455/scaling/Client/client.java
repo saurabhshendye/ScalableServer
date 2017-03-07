@@ -26,7 +26,8 @@ public class client {
     private static int message_rate;
     private static LinkedList<String> HashCodeList = new LinkedList<>();
 
-    public static void main(String [] args) throws IOException, NoSuchAlgorithmException {
+    public static void main(String [] args) throws IOException, NoSuchAlgorithmException
+    {
         server_IP = args[0];
         server_port = Integer.parseInt(args[1]);
         message_rate = Integer.parseInt(args[2]);
@@ -63,40 +64,13 @@ public class client {
                     }
                     String hash = new String(dst);
                     System.out.println("Received Hash: " +hash);
-
+                    removeCode(hash);
                 }
             }
         }
 
         System.out.println("Invalid Key found........");
 
-
-
-//        String newData = "New String to write to file..." + System.currentTimeMillis();
-//        System.out.println("Sending String: " +newData);
-//        byte[] b = newData.getBytes();
-//        String hash = SHA1FromBytes(b);
-//
-//        System.out.println("Hash code for sent message: " +hash);
-//
-//        ByteBuffer buf = ByteBuffer.allocate(48);
-//        buf.clear();
-//
-////        for (int i = 0; i < 5; i++)
-//        {
-//            buf.put(newData.getBytes());
-//
-//            buf.flip();
-//
-//            while(buf.hasRemaining())
-//            {
-//                socketChannel.write(buf);
-//            }
-//
-//            buf.clear();
-//        }
-
-//        System.out.println("Done Writing");
 
     }
 
@@ -105,7 +79,7 @@ public class client {
         HashCodeList.addLast(hash);
     }
 
-    public static void remoceCode(String hash)
+    private static void removeCode(String hash)
     {
         HashCodeList.remove(hash);
     }
