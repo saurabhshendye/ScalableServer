@@ -5,6 +5,7 @@
 package cs455.scaling.Client;
 
 
+import cs455.scaling.Threads.Client_Stats_Printer;
 import cs455.scaling.Threads.Client_send_thread;
 import cs455.scaling.WireFormats.payload;
 
@@ -25,13 +26,16 @@ public class client {
     private static String server_IP;
     private static int server_port;
     private static int message_rate;
-    private static LinkedList<String> HashCodeList = new LinkedList<>();
+    private final static LinkedList<String> HashCodeList = new LinkedList<>();
+    private final static Client_Stats_Printer printer = new Client_Stats_Printer();
 
     public static void main(String [] args) throws IOException, NoSuchAlgorithmException
     {
         server_IP = args[0];
         server_port = Integer.parseInt(args[1]);
         message_rate = Integer.parseInt(args[2]);
+
+        printer.start();
 
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.connect(new InetSocketAddress(server_IP, server_port));
@@ -65,17 +69,17 @@ public class client {
                         keyIterator.remove();
                         if (key.isReadable())
                         {
-                            System.out.println("key is readable now........");
+//                            System.out.println("key is readable now........");
                             ByteBuffer buf = ByteBuffer.allocate(40);
                             int bytesRead = socketChannel.read(buf);
-                            System.out.println("Byte count in byte data: " +bytesRead);
+//                            System.out.println("Byte count in byte data: " +bytesRead);
                             byte [] dst = buf.array();
 //                            while (buf.hasRemaining())
 //                            {
 //                                dst = buf.array();
 //                            }
                             String hash = new String(dst);
-                            System.out.println("Received Hash: " +hash);
+//                            System.out.println("Received Hash: " +hash);
 //                        buf.clear();
                             removeCode(hash);
 
@@ -97,6 +101,7 @@ public class client {
 
     public static void addCode(String hash)
     {
+        printer.incrementSendCount();
         HashCodeList.addLast(hash);
     }
 
@@ -104,10 +109,10 @@ public class client {
     {
         if (isPresent(hash))
         {
-            System.out.println("Match found.. Removing from the list");
+//            System.out.println("Match found.. Removing from the list");
             HashCodeList.remove(hash);
+            printer.incrementRecCount();
         }
-
     }
 
     private static boolean isPresent(String hash)
