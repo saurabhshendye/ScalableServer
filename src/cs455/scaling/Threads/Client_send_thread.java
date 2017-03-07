@@ -10,6 +10,8 @@ import cs455.scaling.util.sha1;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.security.NoSuchAlgorithmException;
 
@@ -30,6 +32,8 @@ public class Client_send_thread extends Thread
     {
         try
         {
+            Selector selector = Selector.open();
+            SelectionKey key = channel.register(selector, SelectionKey.OP_WRITE);
 //            for (int i = 0; i < 30; i++)
             while (true)
             {
@@ -43,32 +47,34 @@ public class Client_send_thread extends Thread
                 String hash = sha1Hash.SHA1FromBytes(b);
                 System.out.println("Hash code for sent message: " +hash);
 
-                // Creating a Bytebuffer of 8KB size and bringing it to initial position
-                ByteBuffer buf = ByteBuffer.allocate(b.length);
-                buf.clear();
-
-                // Putting the byte array into the buffer and
-                // flipping it to make it write ready
-                buf.put(b);
-                buf.flip();
-
-                // Writing on the connected socket channel
-                while(buf.hasRemaining())
+                if (key.isWritable())
                 {
-                    channel.write(buf);
+                    // Creating a Bytebuffer of 8KB size and bringing it to initial position
+                    ByteBuffer buf = ByteBuffer.allocate(b.length);
+                    buf.clear();
+
+                    // Putting the byte array into the buffer and
+                    // flipping it to make it write ready
+                    buf.put(b);
+                    buf.flip();
+
+                    // Writing on the connected socket channel
+                    while(buf.hasRemaining())
+                    {
+                        channel.write(buf);
+                    }
+
+                    // Clearing the current buffer and making it
+                    // Write ready for the next iteration
+                    buf.clear();
+
+
+                    System.out.println("Done Writing");
+                    Thread.sleep(1000/rate);
                 }
 
-                // Clearing the current buffer and making it
-                // Write ready for the next iteration
-                buf.clear();
 
-
-                System.out.println("Done Writing");
-                Thread.sleep(1000/rate);
             }
-
-
-
         }
         catch (IOException | NoSuchAlgorithmException |InterruptedException e)
         {
