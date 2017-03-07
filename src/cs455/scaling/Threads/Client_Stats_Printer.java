@@ -6,6 +6,7 @@ package cs455.scaling.Threads;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Client_Stats_Printer extends Thread
 {
@@ -21,14 +22,14 @@ public class Client_Stats_Printer extends Thread
 
     public void run()
     {
+        System.out.println("Stats printer run method");
         while (true)
         {
-            long start = System.currentTimeMillis();
-            while (start - System.currentTimeMillis() < 10)
-            {
-
+            try {
+                TimeUnit.SECONDS.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
             printStats();
             resetCounters();
         }
