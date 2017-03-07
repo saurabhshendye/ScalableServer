@@ -46,7 +46,8 @@ public class client {
 
 
         Selector selector = Selector.open();
-        SelectionKey key = socketChannel.register(selector, SelectionKey.OP_READ);
+//        SelectionKey key = socketChannel.register(selector, SelectionKey.OP_READ);
+        socketChannel.register(selector, SelectionKey.OP_READ);
 
 
         while (true)
@@ -58,6 +59,8 @@ public class client {
                 Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
                 while (keyIterator.hasNext())
                 {
+                    SelectionKey key = keyIterator.next();
+                    keyIterator.remove();
                     if (i > 0 && key.isReadable())
                     {
                         System.out.println("key is readable now........");
@@ -76,7 +79,7 @@ public class client {
 
 //                        selectedKeys.remove(key);
                         key.cancel();
-                        key = socketChannel.register(selector, SelectionKey.OP_READ);
+                        socketChannel.register(selector, SelectionKey.OP_READ);
                     }
                 }
             }
