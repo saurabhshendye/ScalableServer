@@ -106,7 +106,7 @@ public class Worker_Thread extends Thread {
 
         sha1 sha1Hash = new sha1();
         String hash = sha1Hash.SHA1FromBytes(dst);
-        System.out.println("Hash for received String is: " +hash + " From thread: " +this.getName());
+//        System.out.println("Hash for received String is: " +hash + " From thread: " +this.getName());
 
         System.out.println("Done Reading by: " + this.getName() + "-------" );
 
@@ -147,6 +147,7 @@ public class Worker_Thread extends Thread {
                 buf.clear();
 
                 CompleteFlag = true;
+                System.out.println("Hash Written: " +hash_code + " by " +this.getName());
             }
         }
         selector.close();
