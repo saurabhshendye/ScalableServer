@@ -114,8 +114,10 @@ public class Worker_Thread extends Thread {
         while (key.isValid())
         {
             int i  = selector.select();
+
             if (i> 0 && key.isWritable())
             {
+                System.out.println("Key is writable.. " +this.getName());
                 byte[] hash_bytes = hash_code.getBytes();
 
                 ByteBuffer buf = ByteBuffer.allocate(40);
