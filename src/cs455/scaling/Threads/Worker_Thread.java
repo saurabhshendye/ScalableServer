@@ -114,7 +114,7 @@ public class Worker_Thread extends Thread {
         while (key.isValid())
         {
             int i  = selector.select();
-            if (key.isWritable())
+            if (i> 0 && key.isWritable())
             {
                 byte[] hash_bytes = hash_code.getBytes();
 
@@ -133,7 +133,6 @@ public class Worker_Thread extends Thread {
 
                 buf.clear();
             }
-
         }
         selector.close();
         System.out.println("Written by: " +this.getName());
