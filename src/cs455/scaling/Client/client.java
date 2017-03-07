@@ -15,8 +15,9 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
 import java.util.LinkedList;
-
+import java.util.Set;
 
 
 public class client {
@@ -50,29 +51,36 @@ public class client {
 
         while (true)
         {
-            while (key.isValid())
+//            while (key.isValid())
             {
                 int i  = selector.select();
-                if (i > 0 && key.isReadable())
+                Set<SelectionKey> selectedKeys = selector.selectedKeys();
+                Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
+                while (keyIterator.hasNext())
                 {
-                    System.out.println("key is readable now........");
-                    ByteBuffer buf = ByteBuffer.allocate(40);
-                    int bytesRead = socketChannel.read(buf);
-                    System.out.println("Byte count in byte data: " +bytesRead);
-                    byte [] dst = buf.array();
-                    while (buf.hasRemaining())
+                    if (i > 0 && key.isReadable())
                     {
-                        dst = buf.array();
-                    }
-                    String hash = new String(dst);
-                    System.out.println("Received Hash: " +hash);
-                    buf.clear();
-                    removeCode(hash);
-                    key.cancel();
+                        System.out.println("key is readable now........");
+                        ByteBuffer buf = ByteBuffer.allocate(40);
+                        int bytesRead = socketChannel.read(buf);
+                        System.out.println("Byte count in byte data: " +bytesRead);
+                        byte [] dst = buf.array();
+                        while (buf.hasRemaining())
+                        {
+                            dst = buf.array();
+                        }
+                        String hash = new String(dst);
+                        System.out.println("Received Hash: " +hash);
+                        buf.clear();
+                        removeCode(hash);
 
+                        selectedKeys.remove(key);
+
+                        key = socketChannel.register(selector, SelectionKey.OP_READ);
+                    }
                 }
             }
-            key = socketChannel.register(selector, SelectionKey.OP_READ);
+
         }
 
 //        System.out.println("Invalid Key found........");
