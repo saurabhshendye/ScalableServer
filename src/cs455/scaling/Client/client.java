@@ -52,6 +52,7 @@ public class client {
             {
                 if (key.isReadable())
                 {
+                    System.out.println("key is readable now........");
                     ByteBuffer buf = ByteBuffer.allocate(40);
                     int bytesRead = socketChannel.read(buf);
                     System.out.println("Byte count in byte data: " +bytesRead);
@@ -97,5 +98,15 @@ public class client {
 
 //        System.out.println("Done Writing");
 
+    }
+
+    public static void addCode(String hash)
+    {
+        HashCodeList.addLast(hash);
+    }
+
+    public static void remoceCode(String hash)
+    {
+        HashCodeList.remove(hash);
     }
 }
