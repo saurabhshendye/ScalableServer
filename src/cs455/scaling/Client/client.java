@@ -102,7 +102,16 @@ public class client {
 
     private static void removeCode(String hash)
     {
-        System.out.println("Match found.. Removing from the list");
-        HashCodeList.remove(hash);
+        if (isPresent(hash))
+        {
+            System.out.println("Match found.. Removing from the list");
+            HashCodeList.remove(hash);
+        }
+
+    }
+
+    private static boolean isPresent(String hash)
+    {
+        return HashCodeList.contains(hash);
     }
 }
