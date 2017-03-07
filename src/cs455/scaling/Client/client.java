@@ -74,8 +74,8 @@ public class client {
 //                        buf.clear();
                         removeCode(hash);
 
-                        selectedKeys.remove(key);
-
+//                        selectedKeys.remove(key);
+                        key.cancel();
                         key = socketChannel.register(selector, SelectionKey.OP_READ);
                     }
                 }
