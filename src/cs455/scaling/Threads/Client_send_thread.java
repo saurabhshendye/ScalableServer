@@ -32,8 +32,8 @@ public class Client_send_thread extends Thread
     {
         try
         {
-            Selector selector = Selector.open();
-            SelectionKey key = channel.register(selector, SelectionKey.OP_WRITE);
+//            Selector selector = Selector.open();
+//            SelectionKey key = channel.register(selector, SelectionKey.OP_WRITE);
 //            for (int i = 0; i < 30; i++)
             while (true)
             {
@@ -47,7 +47,7 @@ public class Client_send_thread extends Thread
                 String hash = sha1Hash.SHA1FromBytes(b);
                 System.out.println("Hash code for sent message: " +hash);
 
-                if (key.isWritable())
+//                if (key.isWritable())
                 {
                     // Creating a Bytebuffer of 8KB size and bringing it to initial position
                     ByteBuffer buf = ByteBuffer.allocate(b.length);
@@ -70,8 +70,9 @@ public class Client_send_thread extends Thread
 
 
                     System.out.println("Done Writing");
-                    Thread.sleep(1000/rate);
+
                 }
+                Thread.sleep(1000/rate);
 
 
             }

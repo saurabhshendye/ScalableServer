@@ -113,26 +113,30 @@ public class Worker_Thread extends Thread {
 
         int i  = selector.select();
 
-        if (key.isWritable() && i>0)
+        while (key.isValid())
         {
-            byte [] hash_bytes = hash_code.getBytes();
-
-            ByteBuffer buf = ByteBuffer.allocate(40);
-            buf.clear();
-
-            buf.put(hash_bytes);
-
-            buf.flip();
-
-            while (buf.hasRemaining())
+            if (key.isWritable() && i>0)
             {
-                channel.write(buf);
-            }
+                byte [] hash_bytes = hash_code.getBytes();
 
-            buf.clear();
+                ByteBuffer buf = ByteBuffer.allocate(40);
+                buf.clear();
 
+                buf.put(hash_bytes);
 
-            System.out.println("Written by: " +this.getName());
+                buf.flip();
+
+                while (buf.hasRemaining())
+                {
+                    channel.write(buf);
+                }
+
+                buf.clear();
+
+        }
+
+        System.out.println("Written by: " +this.getName());
+
             selector.close();
         }
     }

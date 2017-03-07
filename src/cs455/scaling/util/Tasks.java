@@ -27,6 +27,7 @@ public class Tasks
     {
         this.type = type;
         this.channel = C;
+        this.hash_code = "";
     }
 
     public int getType()

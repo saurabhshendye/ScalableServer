@@ -43,12 +43,12 @@ public class client {
         send_T.start();
 
 
-        Selector selector = Selector.open();
-        SelectionKey key = socketChannel.register(selector, SelectionKey.OP_READ);
+//        Selector selector = Selector.open();
+//        SelectionKey key = socketChannel.register(selector, SelectionKey.OP_READ);
 
         while (true)
         {
-            if (key.isReadable())
+//            if (key.isReadable())
             {
                 ByteBuffer buf = ByteBuffer.allocate(40);
                 int bytesRead = socketChannel.read(buf);
