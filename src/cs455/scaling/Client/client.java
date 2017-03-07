@@ -43,25 +43,29 @@ public class client {
         send_T.start();
 
 
-//        Selector selector = Selector.open();
-//        SelectionKey key = socketChannel.register(selector, SelectionKey.OP_READ);
+        Selector selector = Selector.open();
+        SelectionKey key = socketChannel.register(selector, SelectionKey.OP_READ);
 
         while (true)
         {
-//            if (key.isReadable())
+            while (key.isValid())
             {
-                ByteBuffer buf = ByteBuffer.allocate(40);
-                int bytesRead = socketChannel.read(buf);
-                System.out.println("Byte count in byte data: " +bytesRead);
-                byte [] dst = buf.array();
-                while (buf.hasRemaining())
+                if (key.isReadable())
                 {
-                    dst = buf.array();
-                }
-                String hash = new String(dst);
-                System.out.println("Received Hash: " +hash);
+                    ByteBuffer buf = ByteBuffer.allocate(40);
+                    int bytesRead = socketChannel.read(buf);
+                    System.out.println("Byte count in byte data: " +bytesRead);
+                    byte [] dst = buf.array();
+                    while (buf.hasRemaining())
+                    {
+                        dst = buf.array();
+                    }
+                    String hash = new String(dst);
+                    System.out.println("Received Hash: " +hash);
 
+                }
             }
+
 
         }
 
