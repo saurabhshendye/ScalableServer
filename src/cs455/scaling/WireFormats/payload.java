@@ -44,7 +44,7 @@ public class payload
         dout.flush();
         byte[] marshaled = baopstream.toByteArray();
 
-        System.out.println("marshaled byte array length: "+marshaled.length);
+//        System.out.println("marshaled byte array length: "+marshaled.length);
 
         baopstream.close();
         dout.close();

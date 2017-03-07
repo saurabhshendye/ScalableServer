@@ -24,7 +24,8 @@ public class server {
     private static Selector selector;
     private static int messageCounter = 0;
 
-    public static void main(String [] args) throws IOException, NoSuchAlgorithmException {
+    public static void main(String [] args) throws IOException, NoSuchAlgorithmException
+    {
         // Opening a selector
         selector = Selector.open();
 
@@ -53,37 +54,41 @@ public class server {
         // Listening for the connections
         while (true)
         {
-            selector.select();
+            int i = selector.select(1);
 
-            Set<SelectionKey> selectedKeys = selector.selectedKeys();
-            Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
-
-            while (keyIterator.hasNext())
+            if (i> 0)
             {
-                SelectionKey key = keyIterator.next();
-                keyIterator.remove();
-                if (key.isAcceptable())
-                {
-                    // Accept a new connection and register the socket channel to selector
-                    System.out.println("Accepted a new connection");
-                    SocketChannel socketChannel = serverSocketChannel.accept();
-                    socketChannel.configureBlocking(false);
-                    socketChannel.register(selector, SelectionKey.OP_READ);
+                Set<SelectionKey> selectedKeys = selector.selectedKeys();
+                Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
 
-                    // Removed the current key so as to check on other keys
-                    selectedKeys.remove(key);
-
-                    // Put the serversocketchannel key back in queue(Last position)
-                    serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-                }
-                else if (key.isReadable())
+                while (keyIterator.hasNext())
                 {
-                    Tasks read = new Tasks(0,(SocketChannel)key.channel());
-                    taskManager.Add_task(read);
-                    increment_counter();
-                    key.cancel();
+                    SelectionKey key = keyIterator.next();
+                    keyIterator.remove();
+                    if (key.isAcceptable())
+                    {
+                        // Accept a new connection and register the socket channel to selector
+                        System.out.println("Accepted a new connection");
+                        SocketChannel socketChannel = serverSocketChannel.accept();
+                        socketChannel.configureBlocking(false);
+                        socketChannel.register(selector, SelectionKey.OP_READ);
+
+                        // Removed the current key so as to check on other keys
+                        selectedKeys.remove(key);
+
+                        // Put the serversocketchannel key back in queue(Last position)
+                        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+                    }
+                    else if (key.isReadable())
+                    {
+                        Tasks read = new Tasks(0,(SocketChannel)key.channel());
+                        taskManager.Add_task(read);
+                        increment_counter();
+                        key.cancel();
+                    }
                 }
             }
+
             // Creating a socketchannnel for incoming connections
 //            SocketChannel socketChannel = serverSocketChannel.accept();
 

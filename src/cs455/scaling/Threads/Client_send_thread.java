@@ -42,7 +42,7 @@ public class Client_send_thread extends Thread
                 // Creating a payload and getting corresponding byte Array
                 payload p = new payload();
                 byte[] b = p.getByteArray();
-                System.out.println("Byte array length: " +b.length);
+//                System.out.println("Byte array length: " +b.length);
 
                 // Calculating the hash for given byte array
                 sha1 sha1Hash = new sha1();
