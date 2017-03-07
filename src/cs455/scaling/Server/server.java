@@ -85,7 +85,7 @@ public class server {
                         Tasks read = new Tasks(0,(SocketChannel)key.channel());
                         taskManager.Add_task(read);
                         increment_counter();
-                        selectedKeys.remove(key);
+//                        selectedKeys.remove(key);
                         key.cancel();
 
                     }

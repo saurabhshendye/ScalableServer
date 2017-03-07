@@ -11,6 +11,8 @@ import java.nio.channels.SocketChannel;
 public class SelectorManager
 {
     private final Selector selector;
+    private final Object privateLock = new Object();
+    private int waitingRequests = 0;
 
     public SelectorManager(Selector S)
     {
@@ -19,9 +21,42 @@ public class SelectorManager
 
     public void getRegistered(SocketChannel channel) throws ClosedChannelException
     {
+        synchronized (privateLock)
+        {
+            try
+            {
+                waitingRequests++;
+                privateLock.wait();
+            }
+            catch (InterruptedException e)
+            {
+                return;
+            }
+        }
 
-        selector.wakeup();
-        channel.register(selector, SelectionKey.OP_READ);
+        try
+        {
+            selector.wakeup();
+            channel.register(selector, SelectionKey.OP_READ);
+            waitingRequests--;
+        }
+        catch (ClosedChannelException e)
+        {
+            e.printStackTrace();
+        }
+
 //        System.out.println("Getting Re-registered");
+    }
+
+    public void clearWaitingRequests()
+    {
+        while (waitingRequests > 0)
+        {
+            synchronized (privateLock)
+            {
+                privateLock.notify();
+            }
+        }
+
     }
 }
