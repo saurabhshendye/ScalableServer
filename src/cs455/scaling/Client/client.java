@@ -70,10 +70,10 @@ public class client {
                             int bytesRead = socketChannel.read(buf);
                             System.out.println("Byte count in byte data: " +bytesRead);
                             byte [] dst = buf.array();
-                            while (buf.hasRemaining())
-                            {
-                                dst = buf.array();
-                            }
+//                            while (buf.hasRemaining())
+//                            {
+//                                dst = buf.array();
+//                            }
                             String hash = new String(dst);
                             System.out.println("Received Hash: " +hash);
 //                        buf.clear();
