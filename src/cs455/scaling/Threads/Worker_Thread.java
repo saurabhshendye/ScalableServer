@@ -45,7 +45,17 @@ public class Worker_Thread extends Thread {
                 {
                     if (current_task.getType() == 0)
                     {
-                        SocketChannel channel = current_task.getChannel();
+                        SocketChannel channel;
+                        try
+                        {
+                            channel = current_task.getChannel();
+                        }
+                        catch (NullPointerException e)
+                        {
+                            System.out.println("Null Pointer Exception in thread: " + this.getName());
+                            continue;
+                        }
+
                         String hash = read_and_hash();
                         Tasks new_task = new Tasks(1,hash,channel);
                         T_manager.Add_task(new_task);
@@ -64,7 +74,7 @@ public class Worker_Thread extends Thread {
 //                getBackInList(this);
 //                System.out.println("Went back to list: " +this.getName());
             }
-            catch (InterruptedException|IOException|NoSuchAlgorithmException|NullPointerException e)
+            catch (InterruptedException|IOException|NoSuchAlgorithmException e)
             {
                 e.printStackTrace();
             }
