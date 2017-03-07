@@ -49,6 +49,7 @@ public class client {
 
 
 //        while (true)
+
         {
             while (key.isValid())
             {
@@ -68,6 +69,9 @@ public class client {
                     System.out.println("Received Hash: " +hash);
                     buf.clear();
                     removeCode(hash);
+                    key.cancel();
+
+                    key = socketChannel.register(selector, SelectionKey.OP_READ);
                 }
             }
         }
