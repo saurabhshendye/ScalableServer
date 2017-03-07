@@ -134,9 +134,10 @@ public class Worker_Thread extends Thread {
 
                 buf.clear();
             }
-            System.out.println("Written by: " +this.getName());
+
         }
-            selector.close();
+        selector.close();
+        System.out.println("Written by: " +this.getName());
     }
 
 
