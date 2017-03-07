@@ -71,7 +71,7 @@ public class client {
                         }
                         String hash = new String(dst);
                         System.out.println("Received Hash: " +hash);
-                        buf.clear();
+//                        buf.clear();
                         removeCode(hash);
 
                         selectedKeys.remove(key);
