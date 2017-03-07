@@ -3,7 +3,7 @@
  */
 package cs455.scaling.Threads;
 
-public class Stats_Printer
+public class Client_Stats_Printer
 {
 
 }
