@@ -22,6 +22,6 @@ public class SelectorManager
 
         selector.wakeup();
         channel.register(selector, SelectionKey.OP_READ);
-        System.out.println("Getting Re-registered");
+//        System.out.println("Getting Re-registered");
     }
 }
