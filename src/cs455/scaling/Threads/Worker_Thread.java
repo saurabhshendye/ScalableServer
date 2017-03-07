@@ -51,7 +51,7 @@ public class Worker_Thread extends Thread {
                         T_manager.Add_task(new_task);
                         selectorManager.getRegistered(channel);
 //                    T_manager.getRegistered(channel);
-
+                        System.out.println("Re-registered by: "+this.getName());
 
                     }
                     else if (current_task.getType() == 1)
