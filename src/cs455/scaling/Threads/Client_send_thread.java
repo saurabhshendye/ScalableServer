@@ -47,7 +47,7 @@ public class Client_send_thread extends Thread
                 // Calculating the hash for given byte array
                 sha1 sha1Hash = new sha1();
                 String hash = sha1Hash.SHA1FromBytes(b);
-                System.out.println("Hash code for sent message: " +hash);
+//                System.out.println("Hash code for sent message: " +hash);
 
                 addCode(hash);
 
@@ -73,7 +73,7 @@ public class Client_send_thread extends Thread
                     buf.clear();
 
 
-                    System.out.println("Done Writing");
+//                    System.out.println("Done Writing");
 
                 }
                 Thread.sleep(1000/rate);

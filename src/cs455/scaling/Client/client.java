@@ -47,11 +47,13 @@ public class client {
         Selector selector = Selector.open();
         SelectionKey key = socketChannel.register(selector, SelectionKey.OP_READ);
 
+
 //        while (true)
         {
             while (key.isValid())
             {
-                if (key.isReadable())
+                int i  = selector.select();
+                if (i > 0 && key.isReadable())
                 {
                     System.out.println("key is readable now........");
                     ByteBuffer buf = ByteBuffer.allocate(40);
