@@ -111,7 +111,8 @@ public class Worker_Thread extends Thread {
 
         SelectionKey key = channel.register(selector, SelectionKey.OP_WRITE);
 
-        while (key.isValid())
+        boolean CompleteFlag = false;
+        while (key.isValid() && !CompleteFlag)
         {
             int i  = selector.select();
 
@@ -134,6 +135,8 @@ public class Worker_Thread extends Thread {
                 }
                 System.out.println("Done Writing: " +this.getName());
                 buf.clear();
+
+                CompleteFlag = true;
             }
         }
         selector.close();
