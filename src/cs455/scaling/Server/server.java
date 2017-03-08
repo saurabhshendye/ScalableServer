@@ -53,8 +53,7 @@ public class server {
 //        taskManager.start();
 
         // Creating a ThreadPoolManager object
-        ThreadPoolManager poolManager = new ThreadPoolManager(Thread_count, taskManager,
-                                                                selectorManager, statsPrinter);
+        ThreadPoolManager poolManager = new ThreadPoolManager(Thread_count, taskManager, selectorManager,statsPrinter);
         poolManager.initialize();
 
         // Listening for the connections
@@ -72,8 +71,6 @@ public class server {
                 {
                     SelectionKey key = keyIterator.next();
                     keyIterator.remove();
-
-                    key.interestOps(key.interestOps() & ~key.readyOps());
                     if (key.isAcceptable())
                     {
                         // Accept a new connection and register the socket channel to selector
@@ -82,12 +79,8 @@ public class server {
                         socketChannel.configureBlocking(false);
                         socketChannel.register(selector, SelectionKey.OP_READ);
 
-                        // Increment the connection counter in stats
-                        statsPrinter.addConnection();
-
                         // Removed the current key so as to check on other keys
-//                        selectedKeys.remove(key);
-                        selector.selectedKeys().remove(key);
+                        selectedKeys.remove(key);
 
                         // Put the serversocketchannel key back in queue(Last position)
                         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
@@ -99,6 +92,7 @@ public class server {
                         increment_counter();
 //                        selectedKeys.remove(key);
                         key.cancel();
+
                     }
                 }
             }
@@ -157,7 +151,7 @@ public class server {
     private static void increment_counter()
     {
         messageCounter++;
-//        System.out.println("Received Messages: " +messageCounter);
+        System.out.println("Received Messages: " +messageCounter);
     }
 
     private static void backToZero()
