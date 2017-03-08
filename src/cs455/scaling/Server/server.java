@@ -80,6 +80,9 @@ public class server {
                         socketChannel.configureBlocking(false);
                         socketChannel.register(selector, SelectionKey.OP_READ);
 
+                        // Increment the connection counter in stats
+                        statsPrinter.addConnection();
+
                         // Removed the current key so as to check on other keys
                         selectedKeys.remove(key);
 
@@ -93,7 +96,6 @@ public class server {
                         increment_counter();
 //                        selectedKeys.remove(key);
                         key.cancel();
-
                     }
                 }
             }

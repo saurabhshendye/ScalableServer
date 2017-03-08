@@ -15,11 +15,13 @@ public class ServerStatsPrinter extends Thread
     private int readProcessed;
     private int writeProcessed;
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private int numberOfConnections;
 
     public ServerStatsPrinter()
     {
         this.readProcessed = 0;
         this.writeProcessed = 0;
+        this.numberOfConnections = 0;
     }
 
     public void run()
@@ -38,12 +40,12 @@ public class ServerStatsPrinter extends Thread
         }
     }
 
-    public void readIncrement()
+    void readIncrement()
     {
         readProcessed++;
     }
 
-    public void writeIncrement()
+    void writeIncrement()
     {
         writeProcessed++;
     }
@@ -54,6 +56,16 @@ public class ServerStatsPrinter extends Thread
         writeProcessed = 0;
     }
 
+    public void addConnection()
+    {
+        numberOfConnections++;
+    }
+
+    public void removeConnection()
+    {
+        numberOfConnections--;
+    }
+
     private void printStats()
     {
         Date date = new Date();
@@ -61,6 +73,9 @@ public class ServerStatsPrinter extends Thread
         average = average/2;
         int rate = average/5;
         System.out.println(dateFormat.format(date) + " Current Server Throughput: "
-                            + rate + " messages/sec" + " Number of active Connections: ");
+                            + rate + " messages/sec" + " Number of active Connections: "
+                            + numberOfConnections);
     }
+
+
 }
