@@ -72,6 +72,8 @@ public class server {
                 {
                     SelectionKey key = keyIterator.next();
                     keyIterator.remove();
+
+                    key.interestOps(key.interestOps() & ~key.readyOps());
                     if (key.isAcceptable())
                     {
                         // Accept a new connection and register the socket channel to selector
