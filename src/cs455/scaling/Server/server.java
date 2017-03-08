@@ -86,7 +86,8 @@ public class server {
                         statsPrinter.addConnection();
 
                         // Removed the current key so as to check on other keys
-                        selectedKeys.remove(key);
+//                        selectedKeys.remove(key);
+                        selector.selectedKeys().remove(key);
 
                         // Put the serversocketchannel key back in queue(Last position)
                         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
