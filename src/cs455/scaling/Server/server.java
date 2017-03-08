@@ -154,7 +154,7 @@ public class server {
     private static void increment_counter()
     {
         messageCounter++;
-        System.out.println("Received Messages: " +messageCounter);
+//        System.out.println("Received Messages: " +messageCounter);
     }
 
     private static void backToZero()
