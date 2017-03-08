@@ -32,12 +32,12 @@ public class Client_send_thread extends Thread
     }
     public void run()
     {
-        try
+        while (true)
         {
 //            Selector selector = Selector.open();
 //            SelectionKey key = channel.register(selector, SelectionKey.OP_WRITE);
 //            for (int i = 0; i < 30; i++)
-            while (true)
+            try
             {
                 // Creating a payload and getting corresponding byte Array
                 payload p = new payload();
@@ -72,7 +72,6 @@ public class Client_send_thread extends Thread
                     // Write ready for the next iteration
                     buf.clear();
 
-
 //                    System.out.println("Done Writing");
 
                 }
@@ -80,12 +79,10 @@ public class Client_send_thread extends Thread
 
 
             }
+            catch (IOException | NoSuchAlgorithmException |InterruptedException e)
+            {
+                e.printStackTrace();
+            }
         }
-        catch (IOException | NoSuchAlgorithmException |InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-
     }
-
 }
