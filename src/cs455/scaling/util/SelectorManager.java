@@ -36,7 +36,7 @@ public class SelectorManager
 
         try
         {
-            selector.wakeup();
+//            selector.wakeup();
             channel.register(selector, SelectionKey.OP_READ);
             waitingRequests--;
         }
