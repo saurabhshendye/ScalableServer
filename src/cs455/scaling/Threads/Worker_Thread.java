@@ -122,18 +122,18 @@ public class Worker_Thread extends Thread {
             bytesRead = socketChannel.read(buf);
 //            System.out.println("Byte count in byte data: " +bytesRead);
 
-            if (bytesRead <=0)
+//            if (bytesRead <=0)
             {
-                System.out.println("Read Error.. closing the channel ");
-                try
-                {
-                    socketChannel.close();
-                    serverStatsPrinter.removeConnection();
-                }
-                catch (IOException e)
-                {
-                    //
-                }
+//                System.out.println("Read Error.. closing the channel ");
+//                try
+//                {
+//                    socketChannel.close();
+//                    serverStatsPrinter.removeConnection();
+//                }
+//                catch (IOException e)
+//                {
+//                    //
+//                }
             }
             dst = buf.array();
 //            System.out.println("Temp length: " +dst.length);

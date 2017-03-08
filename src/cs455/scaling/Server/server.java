@@ -43,7 +43,7 @@ public class server {
 
         // Creating Stats Printer object
         ServerStatsPrinter statsPrinter = new ServerStatsPrinter();
-        statsPrinter.start();
+//        statsPrinter.start();
 
         // Creating a selector manager
         SelectorManager selectorManager = new SelectorManager(selector);
