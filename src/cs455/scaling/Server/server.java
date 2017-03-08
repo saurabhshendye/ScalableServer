@@ -43,7 +43,7 @@ public class server {
 
         // Creating Stats Printer object
         ServerStatsPrinter statsPrinter = new ServerStatsPrinter();
-//        statsPrinter.start();
+        statsPrinter.start();
 
         // Creating a selector manager
         SelectorManager selectorManager = new SelectorManager(selector);
@@ -151,7 +151,7 @@ public class server {
     private static void increment_counter()
     {
         messageCounter++;
-        System.out.println("Received Messages: " +messageCounter);
+//        System.out.println("Received Messages: " +messageCounter);
     }
 
     private static void backToZero()
