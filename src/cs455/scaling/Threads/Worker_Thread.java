@@ -69,7 +69,16 @@ public class Worker_Thread extends Thread {
                     }
                     else if (current_task.getType() == 1)
                     {
-                        write(current_task.getHash_code());
+                        try
+                        {
+                            write(current_task.getHash_code());
+
+                        }
+                        catch (NullPointerException e)
+                        {
+                            continue;
+                        }
+
                         serverStatsPrinter.writeIncrement();
                     }
                 }

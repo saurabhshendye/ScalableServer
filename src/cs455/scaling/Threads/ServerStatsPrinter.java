@@ -26,7 +26,7 @@ public class ServerStatsPrinter extends Thread
 
     public void run()
     {
-        System.out.println("Stats Printer Run method");
+//        System.out.println("Stats Printer Run method");
         while (true)
         {
             try {
