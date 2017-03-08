@@ -5,6 +5,7 @@
 package cs455.scaling.Server;
 
 
+import cs455.scaling.Threads.ServerStatsPrinter;
 import cs455.scaling.util.SelectorManager;
 import cs455.scaling.util.Task_Manager;
 import cs455.scaling.util.ThreadPoolManager;
@@ -40,6 +41,10 @@ public class server {
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         System.out.println("Server socket created and registered ");
 
+        // Creating Stats Printer object
+        ServerStatsPrinter statsPrinter = new ServerStatsPrinter();
+        statsPrinter.start();
+
         // Creating a selector manager
         SelectorManager selectorManager = new SelectorManager(selector);
 
@@ -48,7 +53,8 @@ public class server {
 //        taskManager.start();
 
         // Creating a ThreadPoolManager object
-        ThreadPoolManager poolManager = new ThreadPoolManager(Thread_count, taskManager, selectorManager);
+        ThreadPoolManager poolManager = new ThreadPoolManager(Thread_count, taskManager,
+                                                                selectorManager, statsPrinter);
         poolManager.initialize();
 
         // Listening for the connections

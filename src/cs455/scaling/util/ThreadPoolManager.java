@@ -5,6 +5,7 @@
 package cs455.scaling.util;
 
 
+import cs455.scaling.Threads.ServerStatsPrinter;
 import cs455.scaling.Threads.Worker_Thread;
 
 import java.util.LinkedList;
@@ -14,15 +15,17 @@ public class ThreadPoolManager
     private final Task_Manager manager;
     private final static LinkedList<Worker_Thread> Thread_list = new LinkedList<>();
     private final SelectorManager selectorManager;
+    private final ServerStatsPrinter statsPrinter;
 
 
-    public ThreadPoolManager(int thread_count, Task_Manager M, SelectorManager selectorManager)
+    public ThreadPoolManager(int thread_count, Task_Manager M,
+                                SelectorManager selectorManager, ServerStatsPrinter printer)
     {
         // Creating the requested number of threads,
         // starting the thread and adding it to Thread list
         for (int i = 0; i < thread_count; i++ )
         {
-            Worker_Thread W = new Worker_Thread(M, "Thread-" +i, selectorManager);
+            Worker_Thread W = new Worker_Thread(M, "Thread-" +i, selectorManager, printer);
 //            Thread thread = new Thread(W);
             Thread_list.add(W);
 //            W.start();
@@ -32,6 +35,7 @@ public class ThreadPoolManager
 
         this.manager = M;
         this.selectorManager = selectorManager;
+        this.statsPrinter = printer;
     }
 
     public void initialize()

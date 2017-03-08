@@ -24,12 +24,15 @@ public class Worker_Thread extends Thread {
     private Task_Manager T_manager;
     private static Tasks current_task;
     private final SelectorManager selectorManager;
+    private final ServerStatsPrinter serverStatsPrinter;
 
-    public Worker_Thread(Task_Manager t, String name, SelectorManager selectorManager)
+    public Worker_Thread(Task_Manager t, String name,
+                         SelectorManager selectorManager, ServerStatsPrinter printer)
     {
         super(name);
         this.T_manager = t;
         this.selectorManager = selectorManager;
+        this.serverStatsPrinter = printer;
     }
 
     public void run()
