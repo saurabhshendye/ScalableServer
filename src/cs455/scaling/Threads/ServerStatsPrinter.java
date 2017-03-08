@@ -75,6 +75,7 @@ public class ServerStatsPrinter extends Thread
         System.out.println(dateFormat.format(date) + " Current Server Throughput: "
                             + rate + " messages/sec" + " Number of active Connections: "
                             + numberOfConnections);
+        System.out.println("Number of Active Threads: " +java.lang.Thread.activeCount());
     }
 
 
