@@ -102,15 +102,15 @@ public class Worker_Thread extends Thread {
         if (bytesRead <=0)
         {
             System.out.println("Read Error.. closing the channel ");
-            try
+//            try
             {
-                socketChannel.close();
+//                socketChannel.close();
                 serverStatsPrinter.removeConnection();
             }
-            catch (IOException e)
-            {
-                //
-            }
+//            catch (IOException e)
+//            {
+//                //
+//            }
         }
 
 
