@@ -64,7 +64,7 @@ public class Worker_Thread extends Thread {
                         T_manager.Add_task(new_task);
                         selectorManager.getRegistered(channel);
 //                    T_manager.getRegistered(channel);
-                        System.out.println("Re-registered by: "+this.getName());
+//                        System.out.println("Re-registered by: "+this.getName());
                         serverStatsPrinter.readIncrement();
                     }
                     else if (current_task.getType() == 1)
@@ -112,7 +112,7 @@ public class Worker_Thread extends Thread {
         String hash = sha1Hash.SHA1FromBytes(dst);
 //        System.out.println("Hash for received String is: " +hash + " From thread: " +this.getName());
 
-        System.out.println("Done Reading by: " + this.getName() + "-------" );
+//        System.out.println("Done Reading by: " + this.getName() + "-------" );
 
 //        buf.clear();
         return hash;
@@ -132,7 +132,7 @@ public class Worker_Thread extends Thread {
 
             if (i> 0 && key.isWritable())
             {
-                System.out.println("Key is writable.. " +this.getName());
+//                System.out.println("Key is writable.. " +this.getName());
                 byte[] hash_bytes = hash_code.getBytes();
 
                 ByteBuffer buf = ByteBuffer.allocate(40);
@@ -147,15 +147,15 @@ public class Worker_Thread extends Thread {
 
                     channel.write(buf);
                 }
-                System.out.println("Done Writing: " +this.getName());
+//                System.out.println("Done Writing: " +this.getName());
                 buf.clear();
 
                 CompleteFlag = true;
-                System.out.println("Hash Written: " +hash_code + " by " +this.getName());
+//                System.out.println("Hash Written: " +hash_code + " by " +this.getName());
             }
         }
         selector.close();
-        System.out.println("Written by: " +this.getName());
+//        System.out.println("Written by: " +this.getName());
     }
 
 
