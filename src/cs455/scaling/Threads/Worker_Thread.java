@@ -59,10 +59,13 @@ public class Worker_Thread extends Thread {
                         }
 
                         String hash = read_and_hash();
-                        Tasks new_task = new Tasks(1,hash,channel);
-                        T_manager.Add_task(new_task);
-                        selectorManager.getRegistered(channel);
-//                    T_manager.getRegistered(channel);
+                        if (channel.isOpen())
+                        {
+                            Tasks new_task = new Tasks(1,hash,channel);
+                            T_manager.Add_task(new_task);
+                            selectorManager.getRegistered(channel);
+                        }
+
 //                        System.out.println("Re-registered by: "+this.getName());
                         serverStatsPrinter.readIncrement();
                     }
@@ -95,6 +98,22 @@ public class Worker_Thread extends Thread {
 
         ByteBuffer buf = ByteBuffer.allocate(8192);
         int bytesRead = socketChannel.read(buf);
+
+        if (bytesRead <=0)
+        {
+            System.out.println("Read Error.. closing the channel ");
+            try
+            {
+                socketChannel.close();
+                serverStatsPrinter.removeConnection();
+            }
+            catch (IOException e)
+            {
+                //
+            }
+        }
+
+
 //        System.out.println("Byte count in byte data: " +bytesRead);
         byte [] dst = buf.array();
         while (buf.hasRemaining())
@@ -102,6 +121,20 @@ public class Worker_Thread extends Thread {
 //            System.out.println("Remaining");
             bytesRead = socketChannel.read(buf);
 //            System.out.println("Byte count in byte data: " +bytesRead);
+
+            if (bytesRead <=0)
+            {
+                System.out.println("Read Error.. closing the channel ");
+                try
+                {
+                    socketChannel.close();
+                    serverStatsPrinter.removeConnection();
+                }
+                catch (IOException e)
+                {
+                    //
+                }
+            }
             dst = buf.array();
 //            System.out.println("Temp length: " +dst.length);
 //            System.out.println(buf.remaining());
