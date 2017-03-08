@@ -30,12 +30,12 @@ public class ServerStatsPrinter extends Thread
         while (true)
         {
             try {
-                TimeUnit.SECONDS.sleep(10);
+                TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            printStats();
+//            printStats();
             resetCounters();
         }
     }

@@ -42,21 +42,20 @@ public class Worker_Thread extends Thread {
             try
             {
                 current_task = T_manager.get_task();
-//                wait();
 
                 if (current_task != null)
                 {
                     if (current_task.getType() == 0)
                     {
                         SocketChannel channel;
-                        try
+//                        try
                         {
                             channel = current_task.getChannel();
                         }
-                        catch (NullPointerException e)
+//                        catch (NullPointerException e)
                         {
                             System.out.println("Null Pointer Exception in thread: " + this.getName());
-                            continue;
+//                            continue;
                         }
 
                         String hash = read_and_hash();
@@ -75,14 +74,12 @@ public class Worker_Thread extends Thread {
                         }
                     }
                 }
-
-
 //                getBackInList(this);
 //                System.out.println("Went back to list: " +this.getName());
             }
-            catch (InterruptedException|IOException|NoSuchAlgorithmException e)
+            catch (InterruptedException|IOException|NoSuchAlgorithmException|NullPointerException e)
             {
-                e.printStackTrace();
+                e.getMessage();
             }
         }
     }
@@ -111,13 +108,13 @@ public class Worker_Thread extends Thread {
         }
 
         sha1 sha1Hash = new sha1();
-        String hash = sha1Hash.SHA1FromBytes(dst);
+//        String hash = sha1Hash.SHA1FromBytes(dst);
 //        System.out.println("Hash for received String is: " +hash + " From thread: " +this.getName());
 
 //        System.out.println("Done Reading by: " + this.getName() + "-------" );
 
 //        buf.clear();
-        return hash;
+        return sha1Hash.SHA1FromBytes(dst);
     }
 
     private void write(String hash_code) throws IOException
@@ -144,12 +141,14 @@ public class Worker_Thread extends Thread {
 
                 buf.flip();
 
+                int total = 0;
                 while (buf.hasRemaining())
                 {
-
-                    channel.write(buf);
+                    int write = channel.write(buf);
+                    total = total +write;
                 }
-//                System.out.println("Done Writing: " +this.getName());
+
+                System.out.println("Done Writing: " +this.getName());
                 buf.clear();
 
                 CompleteFlag = true;
@@ -160,11 +159,4 @@ public class Worker_Thread extends Thread {
 //        System.out.println("Written by: " +this.getName());
     }
 
-
-    void setDone(Tasks task)
-    {
-        System.out.println("Set Done");
-        current_task = task;
-        notify();
-    }
 }
