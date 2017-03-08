@@ -63,7 +63,7 @@ public class Worker_Thread extends Thread {
                         T_manager.Add_task(new_task);
                         selectorManager.getRegistered(channel);
 //                    T_manager.getRegistered(channel);
-                        System.out.println("Re-registered by: "+this.getName());
+//                        System.out.println("Re-registered by: "+this.getName());
                         serverStatsPrinter.readIncrement();
                     }
                     else if (current_task.getType() == 1)
@@ -148,7 +148,7 @@ public class Worker_Thread extends Thread {
                     total = total +write;
                 }
 
-                System.out.println("Done Writing: " +this.getName());
+//                System.out.println("Done Writing: " +this.getName());
                 buf.clear();
 
                 CompleteFlag = true;

@@ -35,7 +35,7 @@ public class ServerStatsPrinter extends Thread
                 e.printStackTrace();
             }
 
-//            printStats();
+            printStats();
             resetCounters();
         }
     }
