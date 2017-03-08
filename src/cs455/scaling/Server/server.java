@@ -60,7 +60,7 @@ public class server {
         // Listening for the connections
         while (true)
         {
-            int i = selector.select(1);
+            int i = selector.select();
 
 //            selector.select();
             if (i> 0)
