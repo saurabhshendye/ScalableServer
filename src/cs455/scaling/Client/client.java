@@ -9,8 +9,11 @@ import cs455.scaling.Threads.Client_Stats_Printer;
 import cs455.scaling.Threads.Client_send_thread;
 import cs455.scaling.WireFormats.payload;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -37,59 +40,67 @@ public class client {
 
         printer.start();
 
-        SocketChannel socketChannel = SocketChannel.open();
-        socketChannel.connect(new InetSocketAddress(server_IP, server_port));
-        socketChannel.configureBlocking(false);
-        if(socketChannel.isConnected())
-        {
-            System.out.println("Socket is connected");
-        }
+//        SocketChannel socketChannel = SocketChannel.open();
+//        socketChannel.connect(new InetSocketAddress(server_IP, server_port));
+//        socketChannel.configureBlocking(false);
+        Socket socketChannel = new Socket(server_IP,server_port);
+//        if(socketChannel.isConnected())
+//        {
+//            System.out.println("Socket is connected");
+//        }
 
-        Client_send_thread send_T = new Client_send_thread(socketChannel, message_rate);
+        DataInputStream din = new DataInputStream(socketChannel.getInputStream());
+        DataOutputStream dout = new DataOutputStream(socketChannel.getOutputStream());
+        Client_send_thread send_T = new Client_send_thread(socketChannel, message_rate, dout);
         send_T.start();
 
 
-        Selector selector = Selector.open();
+//        Selector selector = Selector.open();
 //        SelectionKey key = socketChannel.register(selector, SelectionKey.OP_READ);
-        socketChannel.register(selector, SelectionKey.OP_READ);
+//        socketChannel.register(selector, SelectionKey.OP_READ);
 
+        byte [] hash_byte = new byte[40];
 
-        while (true)
+        while (socketChannel != null)
         {
-//            while (key.isValid())
-            {
-                int i  = selector.select();
-                if (i> 0)
-                {
-                    Set<SelectionKey> selectedKeys = selector.selectedKeys();
-                    Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
-                    while (keyIterator.hasNext())
-                    {
-                        SelectionKey key = keyIterator.next();
-                        keyIterator.remove();
-                        if (key.isReadable())
-                        {
-//                            System.out.println("key is readable now........");
-                            ByteBuffer buf = ByteBuffer.allocate(40);
-                            int bytesRead = socketChannel.read(buf);
-//                            System.out.println("Byte count in byte data: " +bytesRead);
-                            byte [] dst = buf.array();
-//                            while (buf.hasRemaining())
-//                            {
-//                                dst = buf.array();
-//                            }
-                            String hash = new String(dst);
-//                            System.out.println("Received Hash: " +hash);
-//                        buf.clear();
-                            removeCode(hash);
+////            while (key.isValid())
+//            {
+////                int i  = selector.select();
+////                if (i> 0)
+//                {
+//                    Set<SelectionKey> selectedKeys = selector.selectedKeys();
+//                    Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
+//                    while (keyIterator.hasNext())
+//                    {
+//                        SelectionKey key = keyIterator.next();
+//                        keyIterator.remove();
+//                        if (key.isReadable())
+//                        {
+////                            System.out.println("key is readable now........");
+//                            ByteBuffer buf = ByteBuffer.allocate(40);
+//                            int bytesRead = socketChannel.read(buf);
+////                            System.out.println("Byte count in byte data: " +bytesRead);
+//                            byte [] dst = buf.array();
+////                            while (buf.hasRemaining())
+////                            {
+////                                dst = buf.array();
+////                            }
+//                            String hash = new String(dst);
+////                            System.out.println("Received Hash: " +hash);
+////                        buf.clear();
+//                            removeCode(hash);
+//
+//                        selectedKeys.remove(key);
+////                            key.cancel();
+//                            socketChannel.register(selector, SelectionKey.OP_READ);
+//                        }
+//                    }
+//                }
+//            }
+            din.readFully(hash_byte);
+            String hash = new String(hash_byte);
+            removeCode(hash);
 
-                        selectedKeys.remove(key);
-//                            key.cancel();
-                            socketChannel.register(selector, SelectionKey.OP_READ);
-                        }
-                    }
-                }
-            }
         }
 
 //        System.out.println("Invalid Key found........");
