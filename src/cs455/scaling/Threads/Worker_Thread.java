@@ -65,11 +65,12 @@ public class Worker_Thread extends Thread {
                         selectorManager.getRegistered(channel);
 //                    T_manager.getRegistered(channel);
                         System.out.println("Re-registered by: "+this.getName());
-
+                        serverStatsPrinter.readIncrement();
                     }
                     else if (current_task.getType() == 1)
                     {
                         write(current_task.getHash_code());
+                        serverStatsPrinter.writeIncrement();
                     }
                 }
 
