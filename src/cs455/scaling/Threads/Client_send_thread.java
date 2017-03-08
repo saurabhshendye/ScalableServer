@@ -77,7 +77,6 @@ public class Client_send_thread extends Thread
                 }
                 Thread.sleep(1000/rate);
 
-
             }
             catch (IOException | NoSuchAlgorithmException |InterruptedException e)
             {
