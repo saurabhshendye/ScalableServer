@@ -61,6 +61,6 @@ public class ServerStatsPrinter extends Thread
         average = average/2;
         int rate = average/5;
         System.out.println(dateFormat.format(date) + " Current Server Throughput: "
-                            + rate + " messages/sec" + "Number of active Connections: ");
+                            + rate + " messages/sec" + " Number of active Connections: ");
     }
 }
