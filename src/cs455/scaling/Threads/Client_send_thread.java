@@ -8,6 +8,8 @@ package cs455.scaling.Threads;
 import cs455.scaling.WireFormats.payload;
 import cs455.scaling.util.sha1;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -26,9 +28,9 @@ public class Client_send_thread extends Thread
 //    private SocketChannel channel;
     private Socket channel;
     private int rate;
-    private final DataOutputStream dout;
+    private final BufferedOutputStream dout;
 
-    public Client_send_thread(Socket channel, int rate, DataOutputStream out)
+    public Client_send_thread(Socket channel, int rate, BufferedOutputStream out)
     {
         this.channel = channel;
         this.rate = rate;

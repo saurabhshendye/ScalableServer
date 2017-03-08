@@ -9,9 +9,7 @@ import cs455.scaling.Threads.Client_Stats_Printer;
 import cs455.scaling.Threads.Client_send_thread;
 import cs455.scaling.WireFormats.payload;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -44,13 +42,13 @@ public class client {
 //        socketChannel.connect(new InetSocketAddress(server_IP, server_port));
 //        socketChannel.configureBlocking(false);
         Socket socketChannel = new Socket(server_IP,server_port);
-//        if(socketChannel.isConnected())
-//        {
-//            System.out.println("Socket is connected");
-//        }
+        if(socketChannel.isConnected())
+        {
+            System.out.println("Socket is connected");
+        }
 
-        DataInputStream din = new DataInputStream(socketChannel.getInputStream());
-        DataOutputStream dout = new DataOutputStream(socketChannel.getOutputStream());
+        BufferedInputStream din = new BufferedInputStream(socketChannel.getInputStream());
+        BufferedOutputStream dout = new BufferedOutputStream(socketChannel.getOutputStream());
         Client_send_thread send_T = new Client_send_thread(socketChannel, message_rate, dout);
         send_T.start();
 
@@ -97,7 +95,7 @@ public class client {
 //                    }
 //                }
 //            }
-            din.readFully(hash_byte);
+            din.read(hash_byte);
             String hash = new String(hash_byte);
             removeCode(hash);
 
