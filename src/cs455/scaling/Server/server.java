@@ -79,6 +79,8 @@ public class server {
                         socketChannel.configureBlocking(false);
                         socketChannel.register(selector, SelectionKey.OP_READ);
 
+                        statsPrinter.addConnection();
+
                         // Removed the current key so as to check on other keys
                         selectedKeys.remove(key);
 
